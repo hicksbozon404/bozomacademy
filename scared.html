@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Official website of Scared The Living Icon - Stream and download all songs, videos, and albums.">
+    <meta name="keywords" content="Scared The Living Icon, music, artist, songs, download, stream, dark music, alternative music">
+    <meta name="author" content="Scared The Living Icon">
+    <title>Scared The Living Icon | Official Music Website</title>
+    <style>
+        :root {
+            --primary: #e63946;
+            --primary-dark: #d00000;
+            --secondary: #1a1a1a;
+            --dark: #121212;
+            --light: #f8f9fa;
+            --gray: #2b2b2b;
+            --gray-light: #3d3d3d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: var(--secondary);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo h1 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: var(--light);
+            font-weight: 300;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        .search-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            border-radius: 50px;
+            border: none;
+            background-color: var(--gray);
+            color: var(--light);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-bar:focus {
+            background-color: var(--gray-light);
+            box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.3);
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.8rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(230, 57, 70, 0.4);
+        }
+
+        .container {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50%;
+            height: 4px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+
+        .music-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .music-card {
+            background-color: var(--secondary);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .music-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .music-cover {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .music-info {
+            padding: 1.5rem;
+        }
+
+        .music-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .music-artist {
+            font-size: 1rem;
+            color: var(--light);
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .music-desc {
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .music-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .play-btn, .download-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .play-btn {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .play-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .download-btn {
+            background-color: var(--gray);
+            color: var(--light);
+        }
+
+        .download-btn:hover {
+            background-color: var(--gray-light);
+        }
+
+        .player-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--secondary);
+            padding: 1rem 2rem;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3);
+            display: none;
+            z-index: 1000;
+        }
+
+        .player-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            width: 30%;
+        }
+
+        .player-cover {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .player-text h4 {
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+            color: var(--primary);
+        }
+
+        .player-text p {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            width: 40%;
+            justify-content: center;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .control-btn:hover {
+            color: var(--primary);
+        }
+
+        .play-pause-btn {
+            font-size: 1.8rem;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 5px;
+            background-color: var(--gray);
+            border-radius: 5px;
+            margin-top: 0.5rem;
+            cursor: pointer;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 5px;
+            width: 0%;
+        }
+
+        .player-volume {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 20%;
+            justify-content: flex-end;
+        }
+
+        .volume-slider {
+            width: 100px;
+            -webkit-appearance: none;
+            height: 5px;
+            background: var(--gray);
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+        }
+
+        footer {
+            background-color: var(--secondary);
+            padding: 2rem;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .social-link {
+            color: var(--light);
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-link:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .player-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .player-info, .player-controls, .player-volume {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .player-volume {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .music-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 576px) {
+            .music-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero {
+                height: 50vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>SCARED <span>THE LIVING ICON</span></h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#music">Music</a></li>
+                <li><a href="#videos">Videos</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <h2>SCARED THE LIVING ICON</h2>
+        <p>Experience the dark, haunting melodies that define a generation. Stream and download all tracks now.</p>
+        <a href="#music" class="btn">Explore Music</a>
+    </section>
+
+    <div class="search-container">
+        <input type="text" class="search-bar" placeholder="Search songs, albums, or lyrics..." id="searchInput">
+    </div>
+
+    <section class="container" id="music">
+        <h2 class="section-title">Latest Releases</h2>
+        <div class="music-grid" id="musicGrid">
+            <!-- Music cards will be dynamically inserted here -->
+        </div>
+    </section>
+
+    <section class="container" id="videos">
+        <h2 class="section-title">Music Videos</h2>
+        <div class="music-grid">
+            <div class="music-card">
+                <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Shadows Fall" class="music-cover">
+                <div class="music-info">
+                    <h3 class="music-title">Shadows Fall</h3>
+                    <p class="music-artist">Scared The Living Icon</p>
+                    <p class="music-desc">Official music video for the haunting track 'Shadows Fall'. Directed by visionary filmmaker Alex Noir.</p>
+                    <div class="music-actions">
+                        <button class="play-btn video-btn" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
+                            <i class="fas fa-play"></i> Play Video
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="music-card">
+                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Eternal Night" class="music-cover">
+                <div class="music-info">
+                    <h3 class="music-title">Eternal Night</h3>
+                    <p class="music-artist">Scared The Living Icon</p>
+                    <p class="music-desc">The cinematic experience of 'Eternal Night' brings the lyrics to life with stunning visuals.</p>
+                    <div class="music-actions">
+                        <button class="play-btn video-btn" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
+                            <i class="fas fa-play"></i> Play Video
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="music-card">
+                <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Whispers in the Dark" class="music-cover">
+                <div class="music-info">
+                    <h3 class="music-title">Whispers in the Dark</h3>
+                    <p class="music-artist">Scared The Living Icon</p>
+                    <p class="music-desc">Live performance video capturing the raw energy of 'Whispers in the Dark'.</p>
+                    <div class="music-actions">
+                        <button class="play-btn video-btn" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
+                            <i class="fas fa-play"></i> Play Video
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container" id="about">
+        <h2 class="section-title">About The Artist</h2>
+        <div style="display: flex; flex-direction: column; gap: 2rem; margin-top: 2rem;">
+            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Scared The Living Icon" style="width: 100%; max-height: 500px; object-fit: cover; border-radius: 10px;">
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <h3 style="font-size: 1.5rem; color: var(--primary);">The Sound of Darkness</h3>
+                <p>Scared The Living Icon is a musical project that emerged from the shadows, blending haunting melodies with deep, introspective lyrics. The artist's identity remains mysterious, allowing the music to speak for itself.</p>
+                <p>With influences ranging from darkwave to post-punk, the sound creates an atmospheric experience that transports listeners to another realm. Each track is carefully crafted to evoke emotion and tell a story.</p>
+                <p>The project began in 2018 and has since gained a cult following for its unique sound and aesthetic. Scared The Living Icon has released three full-length albums and numerous singles, each exploring different facets of the human experience through a dark, poetic lens.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container" id="contact">
+        <h2 class="section-title">Contact</h2>
+        <div style="margin-top: 2rem; background-color: var(--secondary); padding: 2rem; border-radius: 10px;">
+            <form id="contactForm" style="display: flex; flex-direction: column; gap: 1rem;">
+                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" style="padding: 0.8rem; background-color: var(--gray); border: none; border-radius: 5px; color: var(--light);">
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" style="padding: 0.8rem; background-color: var(--gray); border: none; border-radius: 5px; color: var(--light);">
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                    <label for="message">Message</label>
+                    <textarea id="message" rows="5" style="padding: 0.8rem; background-color: var(--gray); border: none; border-radius: 5px; color: var(--light); resize: vertical;"></textarea>
+                </div>
+                <button type="submit" class="btn" style="align-self: flex-start;">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <div class="player-container" id="player">
+        <div class="player-content">
+            <div class="player-info">
+                <img src="" alt="Now Playing" class="player-cover" id="playerCover">
+                <div class="player-text">
+                    <h4 id="playerTitle">No song selected</h4>
+                    <p id="playerArtist">Scared The Living Icon</p>
+                </div>
+            </div>
+            <div class="player-controls">
+                <button class="control-btn" id="prevBtn">
+                    <i class="fas fa-step-backward"></i>
+                </button>
+                <button class="control-btn play-pause-btn" id="playPauseBtn">
+                    <i class="fas fa-play"></i>
+                </button>
+                <button class="control-btn" id="nextBtn">
+                    <i class="fas fa-step-forward"></i>
+                </button>
+                <div style="width: 100%; max-width: 400px;">
+                    <div class="progress-container" id="progressContainer">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-top: 0.3rem;">
+                        <span id="currentTime">0:00</span>
+                        <span id="duration">0:00</span>
+                    </div>
+                </div>
+            </div>
+            <div class="player-volume">
+                <button class="control-btn">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+                <input type="range" min="0" max="100" value="80" class="volume-slider" id="volumeSlider">
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-spotify"></i></a>
+            </div>
+            <p class="copyright">© 2023 Scared The Living Icon. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Video Modal -->
+    <div id="videoModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center;">
+        <div style="position: relative; width: 90%; max-width: 1000px;">
+            <button id="closeModal" style="position: absolute; top: -40px; right: 0; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">
+                <i class="fas fa-times"></i>
+            </button>
+            <div style="padding-bottom: 56.25%; position: relative;">
+                <iframe id="videoFrame" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <script>
+        // Music data
+        const musicData = [
+            {
+                id: 1,
+                title: "Shadows Fall",
+                artist: "Scared The Living Icon",
+                cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+                download: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+                desc: "A haunting melody that explores the depths of despair and the light that follows. Featured on the 'Eternal Darkness' album."
+            },
+            {
+                id: 2,
+                title: "Eternal Night",
+                artist: "Scared The Living Icon",
+                cover: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+                download: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+                desc: "The title track from the breakthrough album that defined the artist's signature sound. Dark, brooding, and beautiful."
+            },
+            {
+                id: 3,
+                title: "Whispers in the Dark",
+                artist: "Scared The Living Icon",
+                cover: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+                download: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+                desc: "An atmospheric journey through sound that builds to a powerful crescendo. Featured in numerous dark fantasy films."
+            },
+            {
+                id: 4,
+                title: "Ashes of Yesterday",
+                artist: "Scared The Living Icon",
+                cover: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+                download: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+                desc: "A melancholic reflection on lost love and the passage of time. Acoustic version available on deluxe edition."
+            },
+            {
+                id: 5,
+                title: "Blood Moon Rising",
+                artist: "Scared The Living Icon",
+                cover: "https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
+                download: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
+                desc: "The lead single from the latest EP, featuring a collaboration with renowned producer Nocturne."
+            },
+            {
+                id: 6,
+                title: "Silent Screams",
+                artist: "Scared The Living Icon",
+                cover: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
+                download: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
+                desc: "A powerful anthem about inner turmoil and the masks we wear. Remixed version available on streaming platforms."
+            }
+        ];
+
+        // DOM elements
+        const musicGrid = document.getElementById('musicGrid');
+        const player = document.getElementById('player');
+        const playerCover = document.getElementById('playerCover');
+        const playerTitle = document.getElementById('playerTitle');
+        const playerArtist = document.getElementById('playerArtist');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const progressBar = document.getElementById('progressBar');
+        const progressContainer = document.getElementById('progressContainer');
+        const currentTimeEl = document.getElementById('currentTime');
+        const durationEl = document.getElementById('duration');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const searchInput = document.getElementById('searchInput');
+        const videoModal = document.getElementById('videoModal');
+        const videoFrame = document.getElementById('videoFrame');
+        const closeModal = document.getElementById('closeModal');
+        const videoBtns = document.querySelectorAll('.video-btn');
+
+        // Audio element
+        const audio = new Audio();
+        let currentSongIndex = 0;
+        let isPlaying = false;
+
+        // Initialize the music grid
+        function initMusicGrid() {
+            musicGrid.innerHTML = '';
+            musicData.forEach((song, index) => {
+                const musicCard = document.createElement('div');
+                musicCard.className = 'music-card';
+                musicCard.innerHTML = `
+                    <img src="${song.cover}" alt="${song.title}" class="music-cover">
+                    <div class="music-info">
+                        <h3 class="music-title">${song.title}</h3>
+                        <p class="music-artist">${song.artist}</p>
+                        <p class="music-desc">${song.desc}</p>
+                        <div class="music-actions">
+                            <button class="play-btn" data-index="${index}">
+                                <i class="fas fa-play"></i> Play
+                            </button>
+                            <a href="${song.download}" class="download-btn" download>
+                                <i class="fas fa-download"></i> Download
+                            </a>
+                        </div>
+                    </div>
+                `;
+                musicGrid.appendChild(musicCard);
+            });
+
+            // Add event listeners to play buttons
+            document.querySelectorAll('.play-btn').forEach(btn => {
+                if (!btn.classList.contains('video-btn')) {
+                    btn.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        playSong(index);
+                    });
+                }
+            });
+        }
+
+        // Play a song
+        function playSong(index) {
+            currentSongIndex = index;
+            const song = musicData[index];
+            
+            player.style.display = 'block';
+            playerCover.src = song.cover;
+            playerTitle.textContent = song.title;
+            playerArtist.textContent = song.artist;
+            
+            audio.src = song.audio;
+            audio.play();
+            isPlaying = true;
+            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            
+            // Scroll to player if it's not visible
+            player.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const { duration, currentTime } = audio;
+            const progressPercent = (currentTime / duration) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+            
+            // Update time display
+            const durationMinutes = Math.floor(duration / 60);
+            let durationSeconds = Math.floor(duration % 60);
+            if (durationSeconds < 10) durationSeconds = `0${durationSeconds}`;
+            
+            // Avoid NaN display
+            if (durationSeconds) {
+                durationEl.textContent = `${durationMinutes}:${durationSeconds}`;
+            }
+            
+            const currentMinutes = Math.floor(currentTime / 60);
+            let currentSeconds = Math.floor(currentTime % 60);
+            if (currentSeconds < 10) currentSeconds = `0${currentSeconds}`;
+            currentTimeEl.textContent = `${currentMinutes}:${currentSeconds}`;
+        }
+
+        // Set progress when clicked on progress bar
+        function setProgress(e) {
+            const width = this.clientWidth;
+            const clickX = e.offsetX;
+            const duration = audio.duration;
+            audio.currentTime = (clickX / width) * duration;
+        }
+
+        // Play/pause toggle
+        function togglePlayPause() {
+            if (isPlaying) {
+                audio.pause();
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            } else {
+                audio.play();
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // Previous song
+        function prevSong() {
+            currentSongIndex--;
+            if (currentSongIndex < 0) {
+                currentSongIndex = musicData.length - 1;
+            }
+            playSong(currentSongIndex);
+        }
+
+        // Next song
+        function nextSong() {
+            currentSongIndex++;
+            if (currentSongIndex > musicData.length - 1) {
+                currentSongIndex = 0;
+            }
+            playSong(currentSongIndex);
+        }
+
+        // Set volume
+        function setVolume() {
+            audio.volume = this.value / 100;
+        }
+
+        // Search functionality
+        function searchSongs() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const filteredSongs = musicData.filter(song => 
+                song.title.toLowerCase().includes(searchTerm) || 
+                song.desc.toLowerCase().includes(searchTerm)
+            );
+            
+            musicGrid.innerHTML = '';
+            filteredSongs.forEach((song, index) => {
+                const musicCard = document.createElement('div');
+                musicCard.className = 'music-card';
+                musicCard.innerHTML = `
+                    <img src="${song.cover}" alt="${song.title}" class="music-cover">
+                    <div class="music-info">
+                        <h3 class="music-title">${song.title}</h3>
+                        <p class="music-artist">${song.artist}</p>
+                        <p class="music-desc">${song.desc}</p>
+                        <div class="music-actions">
+                            <button class="play-btn" data-index="${musicData.indexOf(song)}">
+                                <i class="fas fa-play"></i> Play
+                            </button>
+                            <a href="${song.download}" class="download-btn" download>
+                                <i class="fas fa-download"></i> Download
+                            </a>
+                        </div>
+                    </div>
+                `;
+                musicGrid.appendChild(musicCard);
+            });
+            
+            // Re-add event listeners to play buttons
+            document.querySelectorAll('.play-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    playSong(index);
+                });
+            });
+        }
+
+        // Video modal functionality
+        function openVideoModal(videoUrl) {
+            videoFrame.src = videoUrl;
+            videoModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeVideoModal() {
+            videoFrame.src = '';
+            videoModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Event listeners
+        playPauseBtn.addEventListener('click', togglePlayPause);
+        prevBtn.addEventListener('click', prevSong);
+        nextBtn.addEventListener('click', nextSong);
+        audio.addEventListener('timeupdate', updateProgress);
+        audio.addEventListener('ended', nextSong);
+        progressContainer.addEventListener('click', setProgress);
+        volumeSlider.addEventListener('input', setVolume);
+        searchInput.addEventListener('input', searchSongs);
+        closeModal.addEventListener('click', closeVideoModal);
+
+        videoBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const videoUrl = this.getAttribute('data-video');
+                openVideoModal(videoUrl);
+            });
+        });
+
+        // Initialize
+        initMusicGrid();
+        audio.volume = volumeSlider.value / 100;
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target === videoModal) {
+                closeVideoModal();
+            }
+        });
+
+        // SEO: Add structured data for artist
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.text = JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "MusicGroup",
+            "name": "Scared The Living Icon",
+            "description": "Official website of Scared The Living Icon - Stream and download all songs, videos, and albums.",
+            "url": window.location.href,
+            "genre": "Darkwave, Alternative, Post-Punk",
+            "image": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+            "sameAs": [
+                "https://facebook.com/scaredthelivingicon",
+                "https://twitter.com/scaredtheicon",
+                "https://instagram.com/scaredthelivingicon",
+                "https://youtube.com/scaredthelivingicon",
+                "https://open.spotify.com/artist/scaredthelivingicon"
+            ]
+        });
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>

@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C Language Questions - BOZON ACADEMY</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #000000;
+            --bg-secondary: #0a0a0a;
+            --text-primary: #e2e8f0;
+            --text-secondary: #a0aec0;
+            --accent-color: #34d399;
+            --accent-hover: #10b981;
+            --card-bg: #1a1a1a;
+            --card-border: #2d3748;
+            --card-hover-border: var(--accent-color);
+            --shadow-color: rgba(0, 0, 0, 0.4);
+        }
+
+        body.light-mode {
+            --bg-primary: #f0f2f5;
+            --bg-secondary: #ffffff;
+            --text-primary: #2d3748;
+            --text-secondary: #4a5568;
+            --accent-color: #059669;
+            --accent-hover: #047857;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --card-hover-border: var(--accent-color);
+            --shadow-color: rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        .header-bg {
+            background-color: var(--bg-secondary);
+        }
+
+        .content-section {
+            background-color: var(--bg-secondary);
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 20px var(--shadow-color);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            will-change: background-color, box-shadow;
+        }
+
+        .section-heading {
+            color: var(--text-primary);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .subsection-heading {
+            color: var(--accent-color);
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .question-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.5s ease;
+            will-change: transform, box-shadow;
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px var(--shadow-color);
+            border-color: var(--card-hover-border);
+        }
+
+        .question-options label {
+            display: block;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
+
+        .question-options label:hover {
+            color: var(--accent-color);
+        }
+
+        .question-options input[type="radio"] {
+            margin-right: 0.5rem;
+            accent-color: var(--accent-color);
+        }
+
+        .feedback-message {
+            margin-top: 1rem;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            display: none;
+        }
+
+        .feedback-correct {
+            background-color: #059669; /* Green-700 */
+            color: white;
+        }
+
+        .feedback-incorrect {
+            background-color: #dc2626; /* Red-600 */
+            color: white;
+        }
+
+        .code-textarea {
+            width: 100%;
+            min-height: 150px;
+            background-color: #2d3748;
+            color: #e2e8f0;
+            border: 1px solid var(--card-border);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            font-family: 'Fira Code', 'Cascadia Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            resize: vertical;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        body.light-mode .code-textarea {
+            background-color: #e2e8f0;
+            color: #2d3748;
+        }
+
+        .code-solution {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Cascadia Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+            display: none; /* Hidden by default */
+        }
+
+        body.light-mode .code-solution {
+            background-color: #e2e8f0;
+            color: #2d3748;
+        }
+
+        .btn-check-answer, .btn-reveal-solution, .btn-next-question, .btn-view-all {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            margin-right: 0.5rem;
+            display: inline-block;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-check-answer:hover, .btn-reveal-solution:hover, .btn-next-question:hover, .btn-view-all:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            will-change: background-color, transform, box-shadow;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 8px 15px var(--shadow-color);
+        }
+
+        .theme-toggle-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--text-primary);
+            font-size: 1.8rem;
+            transition: color 0.3s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            color: var(--accent-color);
+        }
+
+        .text-accent {
+            color: var(--accent-color);
+        }
+        .text-primary-color {
+            color: var(--text-primary);
+        }
+        .text-secondary-color {
+            color: var(--text-secondary);
+        }
+
+        .hidden-question {
+            display: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <header class="header-bg shadow-lg py-6 px-4 sm:px-6 lg:px-8 bg-opacity-80 backdrop-blur-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center">
+            <div class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4 sm:mb-0 text-accent">
+                BOZON ACADEMY
+            </div>
+            <nav class="flex items-center space-x-4 sm:space-x-6">
+                <ul class="flex space-x-4 sm:space-x-6">
+                    <li><a href="index.html" class="text-lg font-medium text-secondary-color hover:text-accent transition duration-300">Home</a></li>
+                    <li><a href="index.html#courses" class="text-lg font-medium text-secondary-color hover:text-accent transition duration-300">Courses</a></li>
+                    <li><a href="programming.html" class="text-lg font-medium text-secondary-color hover:text-accent transition duration-300">Programming</a></li>
+                    <li><a href="index.html#about" class="text-lg font-medium text-secondary-color hover:text-accent transition duration-300">About</a></li>
+                    <li><a href="index.html#contact" class="text-lg font-medium text-secondary-color hover:text-accent transition duration-300">Contact</a></li>
+                </ul>
+                <button id="themeToggle" class="theme-toggle-btn">
+                    ☀️
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow py-16 px-4 sm:px-6 lg:px-8" style="background-color: var(--bg-primary);">
+        <div class="max-w-7xl mx-auto">
+            <h1 class="text-5xl font-extrabold text-center mb-12 text-accent">C Language: Exam Questions</h1>
+
+            <section id="theory-questions-section" class="content-section">
+                <h2 class="section-heading">Theory Questions (Multiple Choice)</h2>
+                <p class="text-lg mb-8 text-secondary-color">
+                    Select the best answer for each question and click "Check Answer" to see if you're correct.
+                </p>
+
+                <div id="theory-questions-container">
+                    <!-- Question 1 -->
+                    <div class="question-card theory-question-item" id="theory-q1">
+                        <p class="text-lg font-medium text-primary-color mb-3">1. Which of the following is a correct way to declare an integer variable `x` in C?</p>
+                        <div class="question-options" id="q1-options">
+                            <label><input type="radio" name="q1" value="a"> a) `int x;`</label>
+                            <label><input type="radio" name="q1" value="b"> b) `x int;`</label>
+                            <label><input type="radio" name="q1" value="c"> c) `integer x;`</label>
+                            <label><input type="radio" name="q1" value="d"> d) `declare int x;`</label>
+                        </div>
+                        <button class="btn-check-answer" onclick="checkAnswer('q1', 'a')">Check Answer</button>
+                        <div id="q1-feedback" class="feedback-message"></div>
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div class="question-card theory-question-item hidden-question" id="theory-q2">
+                        <p class="text-lg font-medium text-primary-color mb-3">2. What is the purpose of the `#include <stdio.h>` directive?</p>
+                        <div class="question-options" id="q2-options">
+                            <label><input type="radio" name="q2" value="a"> a) To define the `main` function.</label>
+                            <label><input type="radio" name="q2" value="b"> b) To include standard input/output library functions.</label>
+                            <label><input type="radio" name="q2" value="c"> c) To declare variables.</label>
+                            <label><input type="radio" name="q2" value="d"> d) To comment out code.</label>
+                        </div>
+                        <button class="btn-check-answer" onclick="checkAnswer('q2', 'b')">Check Answer</button>
+                        <div id="q2-feedback" class="feedback-message"></div>
+                    </div>
+
+                    <!-- Question 3 -->
+                    <div class="question-card theory-question-item hidden-question" id="theory-q3">
+                        <p class="text-lg font-medium text-primary-color mb-3">3. Which operator is used for equality comparison in C?</p>
+                        <div class="question-options" id="q3-options">
+                            <label><input type="radio" name="q3" value="a"> a) `=`</label>
+                            <label><input type="radio" name="q3" value="b"> b) `==`</label>
+                            <label><input type="radio" name="q3" value="c"> c) `!=`</label>
+                            <label><input type="radio" name="q3" value="d"> d) `>=`</label>
+                        </div>
+                        <button class="btn-check-answer" onclick="checkAnswer('q3', 'b')">Check Answer</button>
+                        <div id="q3-feedback" class="feedback-message"></div>
+                    </div>
+
+                    <!-- Question 4 -->
+                    <div class="question-card theory-question-item hidden-question" id="theory-q4">
+                        <p class="text-lg font-medium text-primary-color mb-3">4. What is the correct format specifier for printing a `float` value?</p>
+                        <div class="question-options" id="q4-options">
+                            <label><input type="radio" name="q4" value="a"> a) `%d`</label>
+                            <label><input type="radio" name="q4" value="b"> b) `%c`</label>
+                            <label><input type="radio" name="q4" value="c"> c) `%f`</label>
+                            <label><input type="radio" name="q4" value="d"> d) `%s`</label>
+                        </div>
+                        <button class="btn-check-answer" onclick="checkAnswer('q4', 'c')">Check Answer</button>
+                        <div id="q4-feedback" class="feedback-message"></div>
+                    </div>
+
+                    <!-- Question 5 -->
+                    <div class="question-card theory-question-item hidden-question" id="theory-q5">
+                        <p class="text-lg font-medium text-primary-color mb-3">5. What is the output of `printf("%d", 10 % 3);`?</p>
+                        <div class="question-options" id="q5-options">
+                            <label><input type="radio" name="q5" value="a"> a) 3</label>
+                            <label><input type="radio" name="q5" value="b"> b) 1</label>
+                            <label><input type="radio" name="q5" value="c"> c) 0</label>
+                            <label><input type="radio" name="q5" value="d"> d) Error</label>
+                        </div>
+                        <button class="btn-check-answer" onclick="checkAnswer('q5', 'b')">Check Answer</button>
+                        <div id="q5-feedback" class="feedback-message"></div>
+                    </div>
+
+                    <!-- Question 6 -->
+                    <div class="question-card theory-question-item hidden-question" id="theory-q6">
+                        <p class="text-lg font-medium text-primary-color mb-3">6. Which keyword is used to return a value from a function?</p>
+                        <div class="question-options" id="q6-options">
+                            <label><input type="radio" name="q6" value="a"> a) `void`</label>
+                            <label><input type="radio" name="q6" value="b"> b) `break`</label>
+                            <label><input type="radio" name="q6" value="c"> c) `return`</label>
+                            <label><input type="radio" name="q6" value="d"> d) `exit`</label>
+                        </div>
+                        <button class="btn-check-answer" onclick="checkAnswer('q6', 'c')">Check Answer</button>
+                        <div id="q6-feedback" class="feedback-message"></div>
+                    </div>
+
+                    <!-- Question 7 -->
+                    <div class="question-card theory-question-item hidden-question" id="theory-q7">
+                        <p class="text-lg font-medium text-primary-color mb-3">7. Arrays in C are indexed starting from:</p>
+                        <div class="question-options" id="q7-options">
+                            <label><input type="radio" name="q7" value="a"> a) 1</label>
+                            <label><input type="radio" name="q7" value="b"> b) 0</label>
+                            <label><input type="radio" name="q7" value="c"> c) Any positive integer</label>
+                            <label><input type="radio" name="q7" value="d"> d) The size of the array</label>
+                        </div>
+                        <button class="btn-check-answer" onclick="checkAnswer('q7', 'b')">Check Answer</button>
+                        <div id="q7-feedback" class="feedback-message"></div>
+                    </div>
+
+                    <!-- Question 8 -->
+                    <div class="question-card theory-question-item hidden-question" id="theory-q8">
+                        <p class="text-lg font-medium text-primary-color mb-3">8. What does `&` operator do when placed before a variable name?</p>
+                        <div class="question-options" id="q8-options">
+                            <label><input type="radio" name="q8" value="a"> a) Dereferences the pointer.</label>
+                            <label><input type="radio" name="q8" value="b"> b) Returns the value of the variable.</label>
+                            <label><input type="radio" name="q8" value="c"> c) Returns the memory address of the variable.</label>
+                            <label><input type="radio" name="q8" value="d"> d) Multiplies the variable by 1.</label>
+                        </div>
+                        <button class="btn-check-answer" onclick="checkAnswer('q8', 'c')">Check Answer</button>
+                        <div id="q8-feedback" class="feedback-message"></div>
+                    </div>
+
+                    <!-- Question 9 -->
+                    <div class="question-card theory-question-item hidden-question" id="theory-q9">
+                        <p class="text-lg font-medium text-primary-color mb-3">9. Which header file is essential for using `malloc()` and `free()`?</p>
+                        <div class="question-options" id="q9-options">
+                            <label><input type="radio" name="q9" value="a"> a) `stdio.h`</label>
+                            <label><input type="radio" name="q9" value="b"> b) `string.h`</label>
+                            <label><input type="radio" name="q9" value="c"> c) `stdlib.h`</label>
+                            <label><input type="radio" name="q9" value="d"> d) `math.h`</label>
+                        </div>
+                        <button class="btn-check-answer" onclick="checkAnswer('q9', 'c')">Check Answer</button>
+                        <div id="q9-feedback" class="feedback-message"></div>
+                    </div>
+
+                    <!-- Question 10 -->
+                    <div class="question-card theory-question-item hidden-question" id="theory-q10">
+                        <p class="text-lg font-medium text-primary-color mb-3">10. What is the primary purpose of a `for` loop?</p>
+                        <div class="question-options" id="q10-options">
+                            <label><input type="radio" name="q10" value="a"> a) To make decisions based on conditions.</label>
+                            <label><input type="radio" name="q10" value="b"> b) To execute a block of code a specific number of times.</label>
+                            <label><input type="radio" name="q10" value="c"> c) To define a new function.</label>
+                            <label><input type="radio" name="q10" value="d"> d) To declare variables.</label>
+                        </div>
+                        <button class="btn-check-answer" onclick="checkAnswer('q10', 'b')">Check Answer</button>
+                        <div id="q10-feedback" class="feedback-message"></div>
+                    </div>
+
+                    <!-- Question 11 -->
+                    <div class="question-card theory-question-item hidden-question" id="theory-q11">
+                        <p class="text-lg font-medium text-primary-color mb-3">11. Which data type is used to store a single character?</p>
+                        <div class="question-options" id="q11-options">
+                            <label><input type="radio" name="q11" value="a"> a) `int`</label>
+                            <label><input type="radio" name="q11" value="b"> b) `float`</label>
+                            <label><input type="radio" name="q11" value="c"> c) `char`</label>
+                            <label><input type="radio" name="q11" value="d"> d) `string`</label>
+                        </div>
+                        <button class="btn-check-answer" onclick="checkAnswer('q11', 'c')">Check Answer</button>
+                        <div id="q11-feedback" class="feedback-message"></div>
+                    </div>
+
+                    <!-- Question 12 -->
+                    <div class="question-card theory-question-item hidden-question" id="theory-q12">
+                        <p class="text-lg font-medium text-primary-color mb-3">12. What is the value of `x` after `int x = 5; x /= 2;`?</p>
+                        <div class="question-options" id="q12-options">
+                            <label><input type="radio" name="q12" value="a"> a) 2.5</label>
+                            <label><input type="radio" name="q12" value="b"> b) 2</label>
+                            <label><input type="radio" name="q12" value="c"> c) 3</label>
+                            <label><input type="radio" name="q12" value="d"> d) 0</label>
+                        </div>
+                        <button class="btn-check-answer" onclick="checkAnswer('q12', 'b')">Check Answer</button>
+                        <div id="q12-feedback" class="feedback-message"></div>
+                    </div>
+
+                    <!-- Question 13 -->
+                    <div class="question-card theory-question-item hidden-question" id="theory-q13">
+                        <p class="text-lg font-medium text-primary-color mb-3">13. Which of the following is true about `do-while` loop?</p>
+                        <div class="question-options" id="q13-options">
+                            <label><input type="radio" name="q13" value="a"> a) The loop body executes only if the condition is true.</label>
+                            <label><input type="radio" name="q13" value="b"> b) The loop body executes at least once.</label>
+                            <label><input type="radio" name="q13" value="c"> c) The condition is checked at the beginning of the loop.</label>
+                            <label><input type="radio" name="q13" value="d"> d) It is used for infinite loops only.</label>
+                        </div>
+                        <button class="btn-check-answer" onclick="checkAnswer('q13', 'b')">Check Answer</button>
+                        <div id="q13-feedback" class="feedback-message"></div>
+                    </div>
+
+                    <!-- Question 14 -->
+                    <div class="question-card theory-question-item hidden-question" id="theory-q14">
+                        <p class="text-lg font-medium text-primary-color mb-3">14. What is the purpose of the `break` statement in a loop?</p>
+                        <div class="question-options" id="q14-options">
+                            <label><input type="radio" name="q14" value="a"> a) To skip the current iteration and continue with the next.</label>
+                            <label><input type="radio" name="q14" value="b"> b) To terminate the loop and transfer control to the statement immediately following the loop.</label>
+                            <label><input type="radio" value="c"> c) To restart the loop from the beginning.</label>
+                            <label><input type="radio" name="q14" value="d"> d) To pause the loop for a specified time.</label>
+                        </div>
+                        <button class="btn-check-answer" onclick="checkAnswer('q14', 'b')">Check Answer</button>
+                        <div id="q14-feedback" class="feedback-message"></div>
+                    </div>
+
+                    <!-- Question 15 -->
+                    <div class="question-card theory-question-item hidden-question" id="theory-q15">
+                        <p class="text-lg font-medium text-primary-color mb-3">15. Which operator is used to get the value pointed to by a pointer?</p>
+                        <div class="question-options" id="q15-options">
+                            <label><input type="radio" name="q15" value="a"> a) `&`</label>
+                            <label><input type="radio" name="q15" value="b"> b) `*`</label>
+                            <label><input type="radio" name="q15" value="c"> c) `->`</label>
+                            <label><input type="radio" name="q15" value="d"> d) `.`</label>
+                        </div>
+                        <button class="btn-check-answer" onclick="checkAnswer('q15', 'b')">Check Answer</button>
+                        <div id="q15-feedback" class="feedback-message"></div>
+                    </div>
+                </div>
+                <div class="mt-8 text-center">
+                    <button id="nextTheoryQuestionBtn" class="btn-next-question">Next Question</button>
+                    <button id="viewAllTheoryQuestionsBtn" class="btn-view-all">View All Questions</button>
+                </div>
+            </section>
+
+            <section id="coding-questions-section" class="content-section">
+                <h2 class="section-heading">Coding Questions</h2>
+                <p class="text-lg mb-8 text-secondary-color">
+                    Write your C code in the provided text area. Click "Reveal Solution" to see the expected output and a sample correct implementation.
+                    <br><span class="font-bold text-accent">Note: This is not a live compiler. You will need a C compiler (like GCC) on your system to run your code.</span>
+                </p>
+
+                <div id="coding-questions-container">
+                    <!-- Coding Question 1 -->
+                    <div class="question-card coding-question-item" id="coding-q1">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">1. Sum of N Numbers</h4>
+                        <p class="text-base text-secondary-color">Write a C program that takes an integer `N` from the user and calculates the sum of all numbers from 1 to `N`.</p>
+                        <textarea id="code-q1" class="code-textarea" placeholder="Write your C code here..."></textarea>
+                        <button class="btn-reveal-solution" onclick="toggleSolution('solution-q1')">Reveal Solution</button>
+                        <div id="solution-q1" class="code-solution">
+                            <p class="text-accent font-semibold mb-2">Expected Output (for N=5):</p>
+                            <pre>Enter a positive integer N: 5
+Sum of numbers from 1 to 5 is: 15</pre>
+                            <p class="text-accent font-semibold mt-4 mb-2">Sample Solution:</p>
+                            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int N, sum = 0;
+    printf("Enter a positive integer N: ");
+    scanf("%d", &N);
+
+    if (N &lt;= 0) {
+        printf("Please enter a positive integer.\n");
+        return 1;
+    }
+
+    for (int i = 1; i &lt;= N; i++) {
+        sum += i;
+    }
+
+    printf("Sum of numbers from 1 to %d is: %d\n", N, sum);
+    return 0;
+}</pre>
+                        </div>
+                    </div>
+
+                    <!-- Coding Question 2 -->
+                    <div class="question-card coding-question-item hidden-question" id="coding-q2">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">2. Reverse a String</h4>
+                        <p class="text-base text-secondary-color">Write a C program to reverse a given string without using any built-in string reversal functions.</p>
+                        <textarea id="code-q2" class="code-textarea" placeholder="Write your C code here..."></textarea>
+                        <button class="btn-reveal-solution" onclick="toggleSolution('solution-q2')">Reveal Solution</button>
+                        <div id="solution-q2" class="code-solution">
+                            <p class="text-accent font-semibold mb-2">Expected Output (for input "hello"):</p>
+                            <pre>Enter a string: hello
+Reversed string: olleh</pre>
+                            <p class="text-accent font-semibold mt-4 mb-2">Sample Solution:</p>
+                            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char str[100];
+    char reversed_str[100];
+    int length, i, j;
+
+    printf("Enter a string: ");
+    scanf("%s", str);
+
+    length = strlen(str);
+    j = 0;
+    for (i = length - 1; i &gt;= 0; i--) {
+        reversed_str[j] = str[i];
+        j++;
+    }
+    reversed_str[j] = '\0'; // Null-terminate the reversed string
+
+    printf("Reversed string: %s\n", reversed_str);
+    return 0;
+}</pre>
+                        </div>
+                    </div>
+
+                    <!-- Coding Question 3 -->
+                    <div class="question-card coding-question-item hidden-question" id="coding-q3">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">3. Find Largest Element in Array</h4>
+                        <p class="text-base text-secondary-color">Write a C program to find the largest element in an array of integers.</p>
+                        <textarea id="code-q3" class="code-textarea" placeholder="Write your C code here..."></textarea>
+                        <button class="btn-reveal-solution" onclick="toggleSolution('solution-q3')">Reveal Solution</button>
+                        <div id="solution-q3" class="code-solution">
+                            <p class="text-accent font-semibold mb-2">Expected Output (for array {12, 45, 9, 78, 34}):</p>
+                            <pre>The largest element is: 78</pre>
+                            <p class="text-accent font-semibold mt-4 mb-2">Sample Solution:</p>
+                            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int arr[] = {12, 45, 9, 78, 34};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int largest = arr[0];
+
+    for (int i = 1; i &lt; n; i++) {
+        if (arr[i] &gt; largest) {
+            largest = arr[i];
+        }
+    }
+
+    printf("The largest element is: %d\n", largest);
+    return 0;
+}</pre>
+                        </div>
+                    </div>
+
+                    <!-- Coding Question 4 -->
+                    <div class="question-card coding-question-item hidden-question" id="coding-q4">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">4. Check Palindrome</h4>
+                        <p class="text-base text-secondary-color">Write a C program to check if a given string is a palindrome (reads the same forwards and backwards).</p>
+                        <textarea id="code-q4" class="code-textarea" placeholder="Write your C code here..."></textarea>
+                        <button class="btn-reveal-solution" onclick="toggleSolution('solution-q4')">Reveal Solution</button>
+                        <div id="solution-q4" class="code-solution">
+                            <p class="text-accent font-semibold mb-2">Expected Output (for input "madam"):</p>
+                            <pre>Enter a string: madam
+madam is a palindrome.</pre>
+                            <p class="text-accent font-semibold mt-4 mb-2">Sample Solution:</p>
+                            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char str[100];
+    int length, i, j, is_palindrome = 1;
+
+    printf("Enter a string: ");
+    scanf("%s", str);
+
+    length = strlen(str);
+    i = 0;
+    j = length - 1;
+
+    while (i &lt; j) {
+        if (str[i] != str[j]) {
+            is_palindrome = 0;
+            break;
+        }
+        i++;
+        j--;
+    }
+
+    if (is_palindrome) {
+        printf("%s is a palindrome.\n", str);
+    } else {
+        printf("%s is not a palindrome.\n", str);
+    }
+    return 0;
+}</pre>
+                        </div>
+                    </div>
+
+                    <!-- Coding Question 5 -->
+                    <div class="question-card coding-question-item hidden-question" id="coding-q5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">5. Fibonacci Series</h4>
+                        <p class="text-base text-secondary-color">Write a C program to generate the first `N` terms of the Fibonacci series.</p>
+                        <textarea id="code-q5" class="code-textarea" placeholder="Write your C code here..."></textarea>
+                        <button class="btn-reveal-solution" onclick="toggleSolution('solution-q5')">Reveal Solution</button>
+                        <div id="solution-q5" class="code-solution">
+                            <p class="text-accent font-semibold mb-2">Expected Output (for N=7):</p>
+                            <pre>Enter the number of terms: 7
+Fibonacci Series: 0 1 1 2 3 5 8</pre>
+                            <p class="text-accent font-semibold mt-4 mb-2">Sample Solution:</p>
+                            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int n, t1 = 0, t2 = 1, nextTerm;
+
+    printf("Enter the number of terms: ");
+    scanf("%d", &n);
+
+    printf("Fibonacci Series: ");
+
+    for (int i = 1; i &lt;= n; ++i) {
+        printf("%d ", t1);
+        nextTerm = t1 + t2;
+        t1 = t2;
+        t2 = nextTerm;
+    }
+    printf("\n");
+    return 0;
+}</pre>
+                        </div>
+                    </div>
+
+                    <!-- Coding Question 6 -->
+                    <div class="question-card coding-question-item hidden-question" id="coding-q6">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">6. Swap Two Numbers</h4>
+                        <p class="text-base text-secondary-color">Write a C program to swap two numbers using pointers.</p>
+                        <textarea id="code-q6" class="code-textarea" placeholder="Write your C code here..."></textarea>
+                        <button class="btn-reveal-solution" onclick="toggleSolution('solution-q6')">Reveal Solution</button>
+                        <div id="solution-q6" class="code-solution">
+                            <p class="text-accent font-semibold mb-2">Expected Output (for inputs 5 and 10):</p>
+                            <pre>Enter value for num1: 5
+Enter value for num2: 10
+Before swap: num1 = 5, num2 = 10
+After swap: num1 = 10, num2 = 5</pre>
+                            <p class="text-accent font-semibold mt-4 mb-2">Sample Solution:</p>
+                            <pre>#include &lt;stdio.h&gt;
+
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main() {
+    int num1, num2;
+    printf("Enter value for num1: ");
+    scanf("%d", &num1);
+    printf("Enter value for num2: ");
+    scanf("%d", &num2);
+
+    printf("Before swap: num1 = %d, num2 = %d\n", num1, num2);
+    swap(&num1, &num2); // Pass addresses
+    printf("After swap: num1 = %d, num2 = %d\n", num1, num2);
+    return 0;
+}</pre>
+                        </div>
+                    </div>
+
+                    <!-- Coding Question 7 -->
+                    <div class="question-card coding-question-item hidden-question" id="coding-q7">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">7. Count Vowels and Consonants</h4>
+                        <p class="text-base text-secondary-color">Write a C program to count the number of vowels and consonants in a given string.</p>
+                        <textarea id="code-q7" class="code-textarea" placeholder="Write your C code here..."></textarea>
+                        <button class="btn-reveal-solution" onclick="toggleSolution('solution-q7')">Reveal Solution</button>
+                        <div id="solution-q7" class="code-solution">
+                            <p class="text-accent font-semibold mb-2">Expected Output (for input "Programming"):</p>
+                            <pre>Enter a string: Programming
+Vowels: 3
+Consonants: 8</pre>
+                            <p class="text-accent font-semibold mt-4 mb-2">Sample Solution:</p>
+                            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;ctype.h&gt; // For tolower()
+
+int main() {
+    char str[100];
+    int vowels = 0, consonants = 0;
+
+    printf("Enter a string: ");
+    fgets(str, sizeof(str), stdin); // Read string including spaces
+    str[strcspn(str, "\n")] = 0; // Remove trailing newline
+
+    for (int i = 0; str[i] != '\0'; i++) {
+        char ch = tolower(str[i]);
+        if (ch &gt;= 'a' && ch &lt;= 'z') { // Check if it's an alphabet
+            if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') {
+                vowels++;
+            } else {
+                consonants++;
+            }
+        }
+    }
+
+    printf("Vowels: %d\n", vowels);
+    printf("Consonants: %d\n", consonants);
+    return 0;
+}</pre>
+                        </div>
+                    </div>
+
+                    <!-- Coding Question 8 -->
+                    <div class="question-card coding-question-item hidden-question" id="coding-q8">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">8. Simple File Read/Write</h4>
+                        <p class="text-base text-secondary-color">Write a C program to create a text file, write some content to it, and then read and display the content.</p>
+                        <textarea id="code-q8" class="code-textarea" placeholder="Write your C code here..."></textarea>
+                        <button class="btn-reveal-solution" onclick="toggleSolution('solution-q8')">Reveal Solution</button>
+                        <div id="solution-q8" class="code-solution">
+                            <p class="text-accent font-semibold mb-2">Expected Output (console output, also creates `sample.txt`):</p>
+                            <pre>File 'sample.txt' written successfully.
+Content of 'sample.txt':
+Hello, BOZON ACADEMY!
+This is a test line.</pre>
+                            <p class="text-accent font-semibold mt-4 mb-2">Sample Solution:</p>
+                            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt; // For exit()
+
+int main() {
+    FILE *fptr;
+    char data[100];
+
+    // Writing to a file
+    fptr = fopen("sample.txt", "w"); // Open in write mode
+    if (fptr == NULL) {
+        printf("Error opening file for writing!\n");
+        exit(1);
+    }
+    fprintf(fptr, "Hello, BOZON ACADEMY!\n");
+    fprintf(fptr, "This is a test line.\n");
+    fclose(fptr);
+    printf("File 'sample.txt' written successfully.\n");
+
+    // Reading from a file
+    fptr = fopen("sample.txt", "r"); // Open in read mode
+    if (fptr == NULL) {
+        printf("Error opening file for reading!\n");
+        exit(1);
+    }
+    printf("Content of 'sample.txt':\n");
+    while (fgets(data, 100, fptr) != NULL) {
+        printf("%s", data);
+    }
+    fclose(fptr);
+    return 0;
+}</pre>
+                        </div>
+                    </div>
+
+                    <!-- Coding Question 9 -->
+                    <div class="question-card coding-question-item hidden-question" id="coding-q9">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">9. Implement `strlen()`</h4>
+                        <p class="text-base text-secondary-color">Write your own version of the `strlen()` function (string length) without using `string.h`.</p>
+                        <textarea id="code-q9" class="code-textarea" placeholder="Write your C code here..."></textarea>
+                        <button class="btn-reveal-solution" onclick="toggleSolution('solution-q9')">Reveal Solution</button>
+                        <div id="solution-q9" class="code-solution">
+                            <p class="text-accent font-semibold mb-2">Expected Output (for input "Bozon"):</p>
+                            <pre>Enter a string: Bozon
+Length of "Bozon" is: 5</pre>
+                            <p class="text-accent font-semibold mt-4 mb-2">Sample Solution:</p>
+                            <pre>#include &lt;stdio.h&gt;
+
+int my_strlen(const char *str) {
+    int length = 0;
+    while (str[length] != '\0') {
+        length++;
+    }
+    return length;
+}
+
+int main() {
+    char text[100];
+    printf("Enter a string: ");
+    scanf("%s", text);
+    printf("Length of \"%s\" is: %d\n", text, my_strlen(text));
+    return 0;
+}</pre>
+                        </div>
+                    </div>
+
+                    <!-- Coding Question 10 -->
+                    <div class="question-card coding-question-item hidden-question" id="coding-q10">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">10. Bubble Sort</h4>
+                        <p class="text-base text-secondary-color">Implement the Bubble Sort algorithm to sort an array of integers.</p>
+                        <textarea id="code-q10" class="code-textarea" placeholder="Write your C code here..."></textarea>
+                        <button class="btn-reveal-solution" onclick="toggleSolution('solution-q10')">Reveal Solution</button>
+                        <div id="solution-q10" class="code-solution">
+                            <p class="text-accent font-semibold mb-2">Expected Output (for array {64, 34, 25, 12, 22, 11, 90}):</p>
+                            <pre>Original array: 64 34 25 12 22 11 90 
+Sorted array: 11 12 22 25 34 64 90</pre>
+                            <p class="text-accent font-semibold mt-4 mb-2">Sample Solution:</p>
+                            <pre>#include &lt;stdio.h&gt;
+
+void bubbleSort(int arr[], int n) {
+    for (int i = 0; i &lt; n - 1; i++) {
+        for (int j = 0; j &lt; n - i - 1; j++) {
+            if (arr[j] &gt; arr[j+1]) {
+                // Swap arr[j] and arr[j+1]
+                int temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+            }
+        }
+    }
+}
+
+void printArray(int arr[], int size) {
+    for (int i = 0; i &lt; size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int arr[] = {64, 34, 25, 12, 22, 11, 90};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Original array: ");
+    printArray(arr, n);
+
+    bubbleSort(arr, n);
+
+    printf("Sorted array: ");
+    printArray(arr, n);
+    return 0;
+}</pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-8 text-center">
+                    <button id="nextCodingQuestionBtn" class="btn-next-question">Next Question</button>
+                    <button id="viewAllCodingQuestionsBtn" class="btn-view-all">View All Questions</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="header-bg py-8 px-4 sm:px-6 lg:px-8 text-center text-md border-t" style="border-color: var(--card-border);">
+        <div class="max-w-7xl mx-auto" style="color: var(--text-secondary);">
+            <p>&copy; 2025 BOZON ACADEMY. All rights reserved.</p>
+            <p class="mt-2">Developed with passion by <span class="font-semibold" style="color: var(--accent-color);">HICKS BOZON404</span></p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('themeToggle');
+
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme === 'light') {
+                document.body.classList.add('light-mode');
+                themeToggle.textContent = '🌙';
+            } else {
+                themeToggle.textContent = '☀️';
+            }
+
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('light-mode');
+                if (document.body.classList.contains('light-mode')) {
+                    localStorage.setItem('theme', 'light');
+                    themeToggle.textContent = '🌙';
+                } else {
+                    localStorage.setItem('theme', 'dark');
+                    themeToggle.textContent = '☀️';
+                }
+            });
+
+            // --- Question Navigation Logic ---
+            let currentTheoryQuestionIndex = 0;
+            let currentCodingQuestionIndex = 0;
+
+            const theoryQuestions = document.querySelectorAll('.theory-question-item');
+            const codingQuestions = document.querySelectorAll('.coding-question-item');
+
+            const nextTheoryBtn = document.getElementById('nextTheoryQuestionBtn');
+            const viewAllTheoryBtn = document.getElementById('viewAllTheoryQuestionsBtn');
+            const nextCodingBtn = document.getElementById('nextCodingQuestionBtn');
+            const viewAllCodingBtn = document.getElementById('viewAllCodingQuestionsBtn');
+
+            function showQuestion(questions, index) {
+                questions.forEach((q, i) => {
+                    q.classList.add('hidden-question');
+                    // Reset feedback and radio buttons when switching questions
+                    const feedbackDiv = q.querySelector('.feedback-message');
+                    if (feedbackDiv) {
+                        feedbackDiv.style.display = 'none';
+                    }
+                    const radioButtons = q.querySelectorAll('input[type="radio"]');
+                    radioButtons.forEach(radio => radio.checked = false);
+
+                    // Hide any revealed solutions for coding questions
+                    const solutionBlock = q.querySelector('.code-solution');
+                    if (solutionBlock) {
+                        solutionBlock.style.display = 'none';
+                        const revealBtn = q.querySelector('.btn-reveal-solution');
+                        if (revealBtn) revealBtn.textContent = 'Reveal Solution';
+                    }
+                });
+                if (questions[index]) {
+                    questions[index].classList.remove('hidden-question');
+                }
+            }
+
+            function showNextQuestion(sectionType) {
+                if (sectionType === 'theory') {
+                    currentTheoryQuestionIndex = (currentTheoryQuestionIndex + 1) % theoryQuestions.length;
+                    showQuestion(theoryQuestions, currentTheoryQuestionIndex);
+                } else if (sectionType === 'coding') {
+                    currentCodingQuestionIndex = (currentCodingQuestionIndex + 1) % codingQuestions.length;
+                    showQuestion(codingQuestions, currentCodingQuestionIndex);
+                }
+            }
+
+            function showAllQuestions(questions) {
+                questions.forEach(q => q.classList.remove('hidden-question'));
+                // Hide navigation buttons when all are shown
+                if (questions === theoryQuestions) {
+                    nextTheoryBtn.style.display = 'none';
+                    viewAllTheoryBtn.style.display = 'none';
+                } else if (questions === codingQuestions) {
+                    nextCodingBtn.style.display = 'none';
+                    viewAllCodingBtn.style.display = 'none';
+                }
+            }
+
+            // Initial display
+            if (theoryQuestions.length > 0) {
+                showQuestion(theoryQuestions, 0);
+            } else {
+                nextTheoryBtn.style.display = 'none';
+                viewAllTheoryBtn.style.display = 'none';
+            }
+
+            if (codingQuestions.length > 0) {
+                showQuestion(codingQuestions, 0);
+            } else {
+                nextCodingBtn.style.display = 'none';
+                viewAllCodingBtn.style.display = 'none';
+            }
+
+            // Event Listeners for navigation
+            nextTheoryBtn.addEventListener('click', () => showNextQuestion('theory'));
+            viewAllTheoryBtn.addEventListener('click', () => showAllQuestions(theoryQuestions));
+
+            nextCodingBtn.addEventListener('click', () => showNextQuestion('coding'));
+            viewAllCodingBtn.addEventListener('click', () => showAllQuestions(codingQuestions));
+
+
+            // --- Existing functions for checking answers and toggling solutions ---
+            function checkAnswer(questionId, correctAnswer) {
+                const options = document.querySelectorAll(`#${questionId}-options input[name="${questionId}"]`);
+                const feedbackDiv = document.getElementById(`${questionId}-feedback`);
+                let selectedAnswer = null;
+
+                options.forEach(option => {
+                    if (option.checked) {
+                        selectedAnswer = option.value;
+                    }
+                });
+
+                if (selectedAnswer === null) {
+                    feedbackDiv.textContent = "Please select an answer.";
+                    feedbackDiv.className = 'feedback-message feedback-incorrect';
+                    feedbackDiv.style.display = 'block';
+                    return;
+                }
+
+                if (selectedAnswer === correctAnswer) {
+                    feedbackDiv.textContent = "Correct!";
+                    feedbackDiv.className = 'feedback-message feedback-correct';
+                } else {
+                    feedbackDiv.textContent = "Incorrect. Try again!";
+                    feedbackDiv.className = 'feedback-message feedback-incorrect';
+                }
+                feedbackDiv.style.display = 'block';
+            }
+
+            function toggleSolution(solutionId) {
+                const solutionBlock = document.getElementById(solutionId);
+                const button = event.target;
+                if (solutionBlock.style.display === 'block') {
+                    solutionBlock.style.display = 'none';
+                    button.textContent = 'Reveal Solution';
+                } else {
+                    solutionBlock.style.display = 'block';
+                    button.textContent = 'Hide Solution';
+                }
+            }
+
+            // Expose functions to global scope for onclick attributes
+            window.checkAnswer = checkAnswer;
+            window.toggleSolution = toggleSolution;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C Language - BOZON ACADEMY</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #000000;
+            --bg-secondary: #0a0a0a;
+            --text-primary: #e2e8f0;
+            --text-secondary: #a0aec0;
+            --accent-color: #34d399;
+            --accent-hover: #10b981;
+            --card-bg: #1a1a1a;
+            --card-border: #2d3748;
+            --card-hover-border: var(--accent-color);
+            --shadow-color: rgba(0, 0, 0, 0.4);
+        }
+
+        body.light-mode {
+            --bg-primary: #f0f2f5;
+            --bg-secondary: #ffffff;
+            --text-primary: #2d3748;
+            --text-secondary: #4a5568;
+            --accent-color: #059669;
+            --accent-hover: #047857;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --card-hover-border: var(--accent-color);
+            --shadow-color: rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        .header-bg {
+            background-color: var(--bg-secondary);
+        }
+
+        .content-section {
+            background-color: var(--bg-secondary);
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 20px var(--shadow-color);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            will-change: background-color, box-shadow;
+        }
+
+        .section-heading {
+            color: var(--text-primary);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .subsection-heading {
+            color: var(--accent-color);
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.5s ease;
+            will-change: transform, box-shadow;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px var(--shadow-color);
+            border-color: var(--card-hover-border);
+        }
+
+        .feature-card-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            will-change: background-color, transform, box-shadow;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 8px 15px var(--shadow-color);
+        }
+
+        .theme-toggle-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--text-primary);
+            font-size: 1.8rem;
+            transition: color 0.3s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            color: var(--accent-color);
+        }
+
+        .text-accent {
+            color: var(--accent-color);
+        }
+        .text-primary-color {
+            color: var(--text-primary);
+        }
+        .text-secondary-color {
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <header class="header-bg shadow-lg py-6 px-4 sm:px-6 lg:px-8 bg-opacity-80 backdrop-blur-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center">
+            <div class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4 sm:mb-0 text-accent">
+                BOZON ACADEMY
+            </div>
+            <nav class="flex items-center space-x-4 sm:space-x-6">
+                <ul class="flex space-x-4 sm:space-x-6">
+                    <li><a href="index.html" class="text-lg font-medium text-secondary-color hover:text-accent transition duration-300">Home</a></li>
+                    <li><a href="index.html#courses" class="text-lg font-medium text-secondary-color hover:text-accent transition duration-300">Courses</a></li>
+                    <li><a href="programming.html" class="text-lg font-medium text-secondary-color hover:text-accent transition duration-300">Programming</a></li>
+                    <li><a href="index.html#about" class="text-lg font-medium text-secondary-color hover:text-accent transition duration-300">About</a></li>
+                    <li><a href="index.html#contact" class="text-lg font-medium text-secondary-color hover:text-accent transition duration-300">Contact</a></li>
+                </ul>
+                <button id="themeToggle" class="theme-toggle-btn">
+                    ☀️
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow py-16 px-4 sm:px-6 lg:px-8" style="background-color: var(--bg-primary);">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="text-5xl font-extrabold mb-12 text-accent">C Language Resources</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <a href="c_notes.html" class="feature-card">
+                    <span class="feature-card-icon">📝</span>
+                    <h2 class="text-2xl font-bold mb-2 text-primary-color">Notes</h2>
+                    <p class="text-lg text-secondary-color">Comprehensive, easy-to-understand notes with code examples.</p>
+                </a>
+
+                <a href="c_projects.html" class="feature-card">
+                    <span class="feature-card-icon">💡</span>
+                    <h2 class="text-2xl font-bold mb-2 text-primary-color">Projects</h2>
+                    <p class="text-lg text-secondary-color">Hands-on coding projects from beginner to advanced levels.</p>
+                </a>
+
+                <a href="c_questions.html" class="feature-card">
+                    <span class="feature-card-icon">❓</span>
+                    <h2 class="text-2xl font-bold mb-2 text-primary-color">Questions</h2>
+                    <p class="text-lg text-secondary-color">Test your knowledge with theory and coding challenges.</p>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="header-bg py-8 px-4 sm:px-6 lg:px-8 text-center text-md border-t" style="border-color: var(--card-border);">
+        <div class="max-w-7xl mx-auto" style="color: var(--text-secondary);">
+            <p>&copy; 2025 BOZON ACADEMY. All rights reserved.</p>
+            <p class="mt-2">Developed with passion by <span class="font-semibold" style="color: var(--accent-color);">HICKS BOZON404</span></p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('themeToggle');
+
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme === 'light') {
+                document.body.classList.add('light-mode');
+                themeToggle.textContent = '🌙';
+            } else {
+                themeToggle.textContent = '☀️';
+            }
+
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('light-mode');
+                if (document.body.classList.contains('light-mode')) {
+                    localStorage.setItem('theme', 'light');
+                    themeToggle.textContent = '🌙';
+                } else {
+                    localStorage.setItem('theme', 'dark');
+                    themeToggle.textContent = '☀️';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

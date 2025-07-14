@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C Language Notes - BOZON ACADEMY</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #000000;
+            --bg-secondary: #0a0a0a;
+            --text-primary: #e2e8f0;
+            --text-secondary: #a0aec0;
+            --accent-color: #34d399;
+            --accent-hover: #10b981;
+            --card-bg: #1a1a1a;
+            --card-border: #2d3748;
+            --card-hover-border: var(--accent-color);
+            --shadow-color: rgba(0, 0, 0, 0.4);
+        }
+
+        body.light-mode {
+            --bg-primary: #f0f2f5;
+            --bg-secondary: #ffffff;
+            --text-primary: #2d3748;
+            --text-secondary: #4a5568;
+            --accent-color: #059669;
+            --accent-hover: #047857;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --card-hover-border: var(--accent-color);
+            --shadow-color: rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        .header-bg {
+            background-color: var(--bg-secondary);
+        }
+
+        .content-section {
+            background-color: var(--bg-secondary);
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 20px var(--shadow-color);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            will-change: background-color, box-shadow;
+        }
+
+        .section-heading {
+            color: var(--text-primary);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .subsection-heading {
+            color: var(--accent-color);
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .code-block {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Cascadia Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        body.light-mode .code-block {
+            background-color: #e2e8f0;
+            color: #2d3748;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            will-change: background-color, transform, box-shadow;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 8px 15px var(--shadow-color);
+        }
+
+        .theme-toggle-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--text-primary);
+            font-size: 1.8rem;
+            transition: color 0.3s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            color: var(--accent-color);
+        }
+
+        .text-accent {
+            color: var(--accent-color);
+        }
+        .text-primary-color {
+            color: var(--text-primary);
+        }
+        .text-secondary-color {
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <header class="header-bg shadow-lg py-6 px-4 sm:px-6 lg:px-8 bg-opacity-80 backdrop-blur-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center">
+            <div class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4 sm:mb-0 text-accent">
+                BOZON ACADEMY
+            </div>
+            <nav class="flex items-center space-x-4 sm:space-x-6">
+                <ul class="flex space-x-4 sm:space-x-6">
+                    <li><a href="index.html" class="text-lg font-medium text-secondary-color hover:text-accent transition duration-300">Home</a></li>
+                    <li><a href="index.html#courses" class="text-lg font-medium text-secondary-color hover:text-accent transition duration-300">Courses</a></li>
+                    <li><a href="programming.html" class="text-lg font-medium text-secondary-color hover:text-accent transition duration-300">Programming</a></li>
+                    <li><a href="index.html#about" class="text-lg font-medium text-secondary-color hover:text-accent transition duration-300">About</a></li>
+                    <li><a href="index.html#contact" class="text-lg font-medium text-secondary-color hover:text-accent transition duration-300">Contact</a></li>
+                </ul>
+                <button id="themeToggle" class="theme-toggle-btn">
+                    ☀️
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow py-16 px-4 sm:px-6 lg:px-8" style="background-color: var(--bg-primary);">
+        <div class="max-w-7xl mx-auto">
+            <h1 class="text-5xl font-extrabold text-center mb-12 text-accent">C Language Notes: First Year Fundamentals</h1>
+
+            <section id="notes-intro" class="content-section">
+                <h2 class="section-heading">Welcome to C Programming!</h2>
+                <p class="text-lg mb-4 text-secondary-color">
+                    C is a powerful, general-purpose programming language developed by Dennis Ritchie at Bell Labs in the early 1970s. It's known for its efficiency, flexibility, and close-to-hardware capabilities, making it a foundational language for operating systems, embedded systems, and high-performance applications. Understanding C is crucial for anyone looking to delve deep into computer science.
+                </p>
+                <p class="text-lg mb-4 text-secondary-color">
+                    These notes are designed to be straightforward and easy to understand for first-year students, with clear explanations and practical code examples.
+                </p>
+            </section>
+
+            <section id="notes-basics" class="content-section">
+                <h2 class="section-heading">1. Getting Started: Hello World!</h2>
+
+                <h3 class="subsection-heading">1.1 Basic Structure of a C Program</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    A typical C program starts with the `main` function, which is the entry point of execution. The `printf` function is used to display output to the console.
+                </p>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    printf("Hello, BOZON ACADEMY!\n");
+    return 0;
+}</pre>
+                </div>
+                <p class="text-lg mb-4 text-secondary-color">
+                    <span class="text-accent font-semibold">Explanation:</span>
+                    <br><code>#include &lt;stdio.h&gt;</code>: This line includes the standard input/output library, which provides functions like `printf`.
+                    <br><code>int main()</code>: This is the main function where program execution begins. `int` means it returns an integer value.
+                    <br><code>printf("Hello, BOZON ACADEMY!\n");</code>: This prints the string "Hello, BOZON ACADEMY!" to the console. `\n` creates a new line.
+                    <br><code>return 0;</code>: This indicates that the program executed successfully.
+                </p>
+
+                <h3 class="subsection-heading">1.2 Compiling and Running C Programs</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    C is a compiled language. This means you write your code, then use a compiler (like GCC) to translate it into an executable file that your computer can run.
+                </p>
+                <div class="code-block">
+                    <pre># Save your code as hello.c
+# Compile:
+gcc hello.c -o hello
+# Run:
+./hello</pre>
+                </div>
+            </section>
+
+            <section id="notes-data-types" class="content-section">
+                <h2 class="section-heading">2. Variables and Data Types</h2>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Variables are named storage locations that hold data. In C, you must declare a variable's data type before using it. This tells the compiler how much memory to allocate and what kind of values the variable can store.
+                </p>
+
+                <h3 class="subsection-heading">2.1 Basic Data Types</h3>
+                <ul class="list-disc list-inside ml-4 text-lg text-secondary-color mb-4">
+                    <li><code>int</code>: for integers (whole numbers like -5, 0, 100). Typically 2 or 4 bytes.</li>
+                    <li><code>float</code>: for single-precision floating-point numbers (decimal numbers like 3.14, -0.5). Typically 4 bytes.</li>
+                    <li><code>double</code>: for double-precision floating-point numbers (more precise decimal numbers). Typically 8 bytes.</li>
+                    <li><code>char</code>: for single characters (like 'A', 'b', '7'). Typically 1 byte.</li>
+                    <li><code>void</code>: Represents the absence of type. Used for functions that return no value or generic pointers.</li>
+                </ul>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int age = 20;
+    float price = 19.99;
+    char grade = 'A';
+    double pi = 3.1415926535;
+
+    printf("Age: %d\n", age);
+    printf("Price: %.2f\n", price);
+    printf("Grade: %c\n", grade);
+    printf("Pi: %lf\n", pi);
+    return 0;
+}</pre>
+                </div>
+                <p class="text-lg mb-4 text-secondary-color">
+                    <span class="text-accent font-semibold">Explanation of Format Specifiers:</span>
+                    <br><code>%d</code>: Used for printing `int` values.
+                    <br><code>%.2f</code>: Used for printing `float` or `double` values, showing two decimal places.
+                    <br><code>%c</code>: Used for printing `char` values.
+                    <br><code>%lf</code>: Used for printing `double` values (note: `%f` also works for `double` in `printf`, but `%lf` is required for `scanf`).
+                </p>
+
+                <h3 class="subsection-heading">2.2 Type Modifiers</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Modifiers can be used with basic data types to change their range or behavior:
+                    <ul class="list-disc list-inside ml-4 text-lg text-secondary-color mb-4">
+                        <li><code>short</code>: Smaller range than `int`.</li>
+                        <li><code>long</code>: Larger range than `int`.</li>
+                        <li><code>signed</code>: Can hold positive and negative values (default).</li>
+                        <li><code>unsigned</code>: Can only hold non-negative values, extending the positive range.</li>
+                    </ul>
+                </p>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    unsigned int positive_num = 4000000000; // Larger positive value
+    long int big_num = 1234567890123L;     // Very large integer
+    printf("Unsigned Int: %u\n", positive_num);
+    printf("Long Int: %ld\n", big_num);
+    return 0;
+}</pre>
+                </div>
+            </section>
+
+            <section id="notes-operators" class="content-section">
+                <h2 class="section-heading">3. Operators</h2>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Operators are symbols that tell the compiler to perform specific mathematical, relational, or logical operations and produce a final result.
+                </p>
+
+                <h3 class="subsection-heading">3.1 Arithmetic Operators</h3>
+                <ul class="list-disc list-inside ml-4 text-lg text-secondary-color mb-4">
+                    <li>`+` (Addition)</li>
+                    <li>`-` (Subtraction)</li>
+                    <li>`*` (Multiplication)</li>
+                    <li>`/` (Division)</li>
+                    <li>`%` (Modulus - remainder of division)</li>
+                    <li>`++` (Increment - adds 1)</li>
+                    <li>`--` (Decrement - subtracts 1)</li>
+                </ul>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int x = 10, y = 3;
+    printf("x + y = %d\n", x + y); // 13
+    printf("x / y = %d\n", x / y); // 3 (integer division)
+    printf("x %% y = %d\n", x % y); // 1
+    x++; // x becomes 11
+    printf("x after increment: %d\n", x);
+    return 0;
+}</pre>
+                </div>
+
+                <h3 class="subsection-heading">3.2 Relational Operators</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Used to compare two values. They return 1 (true) or 0 (false).
+                </p>
+                <ul class="list-disc list-inside ml-4 text-lg text-secondary-color mb-4">
+                    <li>`==` (Equal to)</li>
+                    <li>`!=` (Not equal to)</li>
+                    <li>`>` (Greater than)</li>
+                    <li>`<` (Less than)</li>
+                    <li>`>=` (Greater than or equal to)</li>
+                    <li>`<=` (Less than or equal to)</li>
+                </ul>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 5, b = 5, c = 10;
+    printf("a == b: %d\n", a == b); // 1 (True)
+    printf("a != c: %d\n", a != c); // 1 (True)
+    printf("a > c: %d\n", a > c);   // 0 (False)
+    return 0;
+}</pre>
+                </div>
+
+                <h3 class="subsection-heading">3.3 Logical Operators</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Used to combine or negate conditional statements.
+                </p>
+                <ul class="list-disc list-inside ml-4 text-lg text-secondary-color mb-4">
+                    <li>`&&` (Logical AND - true if both operands are true)</li>
+                    <li>`||` (Logical OR - true if at least one operand is true)</li>
+                    <li>`!` (Logical NOT - reverses the logical state)</li>
+                </ul>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int age = 25;
+    int has_license = 1; // 1 for true, 0 for false
+
+    if (age >= 18 && has_license) {
+        printf("Eligible to drive.\n");
+    }
+    if (age < 18 || !has_license) {
+        printf("Not eligible to drive.\n");
+    }
+    return 0;
+}</pre>
+                </div>
+
+                <h3 class="subsection-heading">3.4 Assignment Operators</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Used to assign values to variables.
+                </p>
+                <ul class="list-disc list-inside ml-4 text-lg text-secondary-color mb-4">
+                    <li>`=` (Simple assignment)</li>
+                    <li>`+=` (Add and assign: `x += y` is same as `x = x + y`)</li>
+                    <li>`-=` (Subtract and assign)</li>
+                    <li>`*=` (Multiply and assign)</li>
+                    <li>`/=` (Divide and assign)</li>
+                    <li>`%=` (Modulus and assign)</li>
+                </ul>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int num = 10;
+    num += 5; // num is now 15
+    printf("num: %d\n", num);
+    num *= 2; // num is now 30
+    printf("num: %d\n", num);
+    return 0;
+}</pre>
+                </div>
+            </section>
+
+            <section id="notes-control-flow" class="content-section">
+                <h2 class="section-heading">4. Control Flow Statements</h2>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Control flow statements dictate the order in which instructions are executed in a program.
+                </p>
+
+                <h3 class="subsection-heading">4.1 Conditionals: `if`, `else if`, `else`</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Allow your program to make decisions based on certain conditions.
+                </p>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int score = 75;
+    if (score >= 90) {
+        printf("Grade: A\n");
+    } else if (score >= 80) {
+        printf("Grade: B\n");
+    } else if (score >= 70) {
+        printf("Grade: C\n");
+    } else {
+        printf("Grade: F\n");
+    }
+    return 0;
+}</pre>
+                </div>
+
+                <h3 class="subsection-heading">4.2 Conditionals: `switch` Statement</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    A multi-way branch statement that provides an easy way to dispatch execution to different parts of code based on the value of an expression.
+                </p>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    char grade = 'B';
+    switch (grade) {
+        case 'A':
+            printf("Excellent!\n");
+            break;
+        case 'B':
+            printf("Very Good!\n");
+            break;
+        case 'C':
+            printf("Good.\n");
+            break;
+        default:
+            printf("Needs Improvement.\n");
+    }
+    return 0;
+}</pre>
+                </div>
+
+                <h3 class="subsection-heading">4.3 Loops: `for` Loop</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Used when you know exactly how many times you want to loop.
+                </p>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    printf("Numbers from 1 to 5:\n");
+    for (int i = 1; i <= 5; i++) {
+        printf("%d ", i);
+    }
+    printf("\n");
+    return 0;
+}</pre>
+                </div>
+
+                <h3 class="subsection-heading">4.4 Loops: `while` Loop</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Used when you want to loop as long as a condition is true.
+                </p>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    printf("Counting down from 5:\n");
+    int count = 5;
+    while (count > 0) {
+        printf("%d ", count);
+        count--;
+    }
+    printf("\n");
+    return 0;
+}</pre>
+                </div>
+
+                <h3 class="subsection-heading">4.5 Loops: `do-while` Loop</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Similar to `while`, but guarantees the loop body executes at least once.
+                </p>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int i = 0;
+    do {
+        printf("Hello (do-while)!\n");
+        i++;
+    } while (i < 1); // Condition is false, but runs once
+    return 0;
+}</pre>
+                </div>
+
+                <h3 class="subsection-heading">4.6 `break` and `continue` Statements</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    `break` exits the loop immediately. `continue` skips the current iteration and proceeds to the next.
+                </p>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    printf("Using break:\n");
+    for (int i = 1; i <= 5; i++) {
+        if (i == 3) {
+            break; // Exit loop when i is 3
+        }
+        printf("%d ", i);
+    }
+    printf("\n");
+
+    printf("Using continue:\n");
+    for (int i = 1; i <= 5; i++) {
+        if (i == 3) {
+            continue; // Skip 3
+        }
+        printf("%d ", i);
+    }
+    printf("\n");
+    return 0;
+}</pre>
+                </div>
+            </section>
+
+            <section id="notes-functions" class="content-section">
+                <h2 class="section-heading">5. Functions</h2>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Functions are blocks of code that perform a specific task. They promote modularity, reusability, and make programs easier to understand and debug.
+                </p>
+
+                <h3 class="subsection-heading">5.1 Function Declaration (Prototype) and Definition</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    A function prototype tells the compiler about a function's name, return type, and parameters before its actual definition.
+                </p>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+// Function declaration (prototype)
+int add(int num1, int num2);
+
+int main() {
+    int result = add(10, 5);
+    printf("Sum: %d\n", result);
+    return 0;
+}
+
+// Function definition
+int add(int num1, int num2) {
+    return num1 + num2;
+}</pre>
+                </div>
+
+                <h3 class="subsection-heading">5.2 Parameters and Return Values</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Functions can accept input values (parameters) and can return a single value back to the calling code.
+                </p>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+// Function that takes no parameters and returns no value
+void greet() {
+    printf("Hello there!\n");
+}
+
+// Function that takes a parameter and returns no value
+void print_number(int num) {
+    printf("The number is: %d\n", num);
+}
+
+// Function that takes parameters and returns a value
+int multiply(int a, int b) {
+    return a * b;
+}
+
+int main() {
+    greet();
+    print_number(42);
+    int product = multiply(7, 6);
+    printf("Product: %d\n", product);
+    return 0;
+}</pre>
+                </div>
+            </section>
+
+            <section id="notes-arrays" class="content-section">
+                <h2 class="section-heading">6. Arrays</h2>
+                <p class="text-lg mb-4 text-secondary-color">
+                    An array is a collection of elements of the same data type stored at contiguous memory locations. They are useful for storing a fixed-size sequential collection of elements.
+                </p>
+
+                <h3 class="subsection-heading">6.1 Declaring and Initializing Arrays</h3>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    // Declare an array of 5 integers
+    int numbers[5];
+
+    // Initialize elements
+    numbers[0] = 10;
+    numbers[1] = 20;
+    numbers[2] = 30;
+    numbers[3] = 40;
+    numbers[4] = 50;
+
+    // Declare and initialize an array at once
+    float prices[] = {1.99, 2.49, 0.75}; // Size is automatically determined (3)
+
+    printf("First number: %d\n", numbers[0]);
+    printf("Second price: %.2f\n", prices[1]);
+    return 0;
+}</pre>
+                </div>
+
+                <h3 class="subsection-heading">6.2 Accessing Array Elements</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Array elements are accessed using an index, which starts from 0 for the first element.
+                </p>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int scores[4] = {85, 90, 78, 92};
+
+    printf("Scores: ");
+    for (int i = 0; i < 4; i++) {
+        printf("%d ", scores[i]);
+    }
+    printf("\n");
+    return 0;
+}</pre>
+                </div>
+
+                <h3 class="subsection-heading">6.3 Multi-dimensional Arrays (Basic)</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Arrays can have more than one dimension, like a grid or a table. A 2D array is often called a matrix.
+                </p>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int matrix[2][3] = {
+        {1, 2, 3},
+        {4, 5, 6}
+    };
+
+    printf("Element at [0][1]: %d\n", matrix[0][1]); // Output: 2
+    printf("Element at [1][2]: %d\n", matrix[1][2]); // Output: 6
+    return 0;
+}</pre>
+                </div>
+            </section>
+
+            <section id="notes-strings" class="content-section">
+                <h2 class="section-heading">7. Strings</h2>
+                <p class="text-lg mb-4 text-secondary-color">
+                    In C, strings are essentially arrays of characters terminated by a null character (`\0`). The `<string.h>` library provides many useful functions for string manipulation.
+                </p>
+
+                <h3 class="subsection-heading">7.1 Declaring and Initializing Strings</h3>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt; // For string functions
+
+int main() {
+    char greeting[] = "Hello"; // Array of characters, size determined automatically
+    char name[20]; // Array to hold up to 19 characters + null terminator
+
+    printf("Greeting: %s\n", greeting);
+
+    // Copying a string
+    strcpy(name, "Bozon");
+    printf("Name: %s\n", name);
+
+    // Concatenating strings
+    strcat(greeting, " World"); // greeting is now "Hello World"
+    printf("Concatenated: %s\n", greeting);
+
+    // String length
+    printf("Length of greeting: %lu\n", strlen(greeting)); // %lu for size_t
+    return 0;
+}</pre>
+                </div>
+            </section>
+
+            <section id="notes-pointers" class="content-section">
+                <h2 class="section-heading">8. Pointers</h2>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Pointers are variables that store memory addresses. They are a fundamental and powerful concept in C, allowing for direct memory manipulation, efficient array handling, and dynamic memory allocation.
+                </p>
+
+                <h3 class="subsection-heading">8.1 Declaring and Initializing Pointers</h3>
+                <ul class="list-disc list-inside ml-4 text-lg text-secondary-color mb-4">
+                    <li>`*` (Dereference operator): Used to access the value at the address pointed to by the pointer.</li>
+                    <li>`&` (Address-of operator): Used to get the memory address of a variable.</li>
+                </ul>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int var = 10;
+    int *ptr; // Declare a pointer variable that points to an integer
+
+    ptr = &var; // Store the address of 'var' in 'ptr'
+
+    printf("Value of var: %d\n", var);
+    printf("Address of var: %p\n", &var); // %p for printing address
+    printf("Value of ptr (address it holds): %p\n", ptr);
+    printf("Value at the address ptr holds (*ptr): %d\n", *ptr); // Dereferencing
+
+    *ptr = 20; // Change value of var using pointer
+    printf("New value of var: %d\n", var);
+    return 0;
+}</pre>
+                </div>
+
+                <h3 class="subsection-heading">8.2 Pointers and Arrays</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Array names can often be treated as pointers to their first element. This close relationship is key to C's power.
+                </p>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int arr[] = {10, 20, 30, 40, 50};
+    int *p = arr; // p points to the first element (arr[0])
+
+    printf("arr[0] using pointer: %d\n", *p);
+    printf("arr[1] using pointer arithmetic: %d\n", *(p + 1)); // Moves to next element
+    printf("arr[2] using pointer arithmetic: %d\n", *(arr + 2)); // arr itself can be used
+
+    return 0;
+}</pre>
+                </div>
+            </section>
+
+            <section id="notes-structs-unions-enums" class="content-section">
+                <h2 class="section-heading">9. Structures, Unions, and Enums</h2>
+                <p class="text-lg mb-4 text-secondary-color">
+                    These are user-defined data types that allow you to group related data and define custom sets of named integer constants.
+                </p>
+
+                <h3 class="subsection-heading">9.1 Structures (`struct`)</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    A `struct` is a collection of variables (of different data types) under a single name. It's used to create complex data types.
+                </p>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+// Define a structure for a student
+struct Student {
+    int id;
+    char name[50];
+    float grade;
+};
+
+int main() {
+    struct Student s1; // Declare a structure variable
+
+    s1.id = 101;
+    strcpy(s1.name, "Alice Smith");
+    s1.grade = 88.5;
+
+    printf("Student ID: %d\n", s1.id);
+    printf("Student Name: %s\n", s1.name);
+    printf("Student Grade: %.1f\n", s1.grade);
+    return 0;
+}</pre>
+                </div>
+
+                <h3 class="subsection-heading">9.2 Unions (`union`)</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Similar to structures, but all members share the same memory location. Only one member can hold a value at any given time. Useful for memory optimization when you know only one piece of data will be active.
+                </p>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+union Data {
+    int i;
+    float f;
+    char str[20];
+};
+
+int main() {
+    union Data data;
+
+    data.i = 10;
+    printf("data.i: %d\n", data.i);
+
+    data.f = 220.5; // This overwrites data.i
+    printf("data.f: %.1f\n", data.f);
+
+    strcpy(data.str, "C Programming"); // This overwrites data.f
+    printf("data.str: %s\n", data.str);
+
+    // Accessing other members after str is set will give garbage values
+    printf("data.i (after str): %d\n", data.i);
+    return 0;
+}</pre>
+                </div>
+
+                <h3 class="subsection-heading">9.3 Enumerations (`enum`)</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    An `enum` is a user-defined data type that consists of a set of named integer constants. It makes code more readable and maintainable.
+                </p>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+enum Weekday {
+    MONDAY,    // 0 by default
+    TUESDAY,   // 1
+    WEDNESDAY, // 2
+    THURSDAY,  // 3
+    FRIDAY,    // 4
+    SATURDAY,  // 5
+    SUNDAY     // 6
+};
+
+int main() {
+    enum Weekday today = WEDNESDAY;
+    printf("Today is day number: %d\n", today); // Output: 2
+
+    if (today == WEDNESDAY) {
+        printf("It's hump day!\n");
+    }
+    return 0;
+}</pre>
+                </div>
+            </section>
+
+            <section id="notes-fileio" class="content-section">
+                <h2 class="section-heading">10. File I/O (Input/Output)</h2>
+                <p class="text-lg mb-4 text-secondary-color">
+                    File I/O allows your C programs to interact with files on your computer's disk, enabling persistence of data.
+                </p>
+
+                <h3 class="subsection-heading">10.1 Opening and Closing Files</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    The `FILE` pointer is used to manage files. `fopen()` opens a file, and `fclose()` closes it.
+                </p>
+                <ul class="list-disc list-inside ml-4 text-lg text-secondary-color mb-4">
+                    <li>`"r"`: Read mode (file must exist)</li>
+                    <li>`"w"`: Write mode (creates new file or overwrites existing)</li>
+                    <li>`"a"`: Append mode (creates new file or adds to end of existing)</li>
+                    <li>`"r+"`: Read and write (file must exist)</li>
+                    <li>`"w+"`: Read and write (creates new file or overwrites existing)</li>
+                    <li>`"a+"`: Read and append (creates new file or adds to end of existing)</li>
+                </ul>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    FILE *fptr;
+
+    // Open file in write mode
+    fptr = fopen("example.txt", "w");
+
+    if (fptr == NULL) {
+        printf("Error opening file!\n");
+        return 1;
+    }
+
+    printf("File opened successfully for writing.\n");
+    fclose(fptr); // Close the file
+    printf("File closed.\n");
+    return 0;
+}</pre>
+                </div>
+
+                <h3 class="subsection-heading">10.2 Writing to Files</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Use `fprintf()` to write formatted output to a file, similar to `printf()`.
+                </p>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    FILE *fptr;
+    fptr = fopen("data.txt", "w");
+
+    if (fptr == NULL) {
+        printf("Error opening file!\n");
+        return 1;
+    }
+
+    fprintf(fptr, "Hello from C programming!\n");
+    fprintf(fptr, "This is a new line.\n");
+    fclose(fptr);
+    printf("Data written to data.txt\n");
+    return 0;
+}</pre>
+                </div>
+
+                <h3 class="subsection-heading">10.3 Reading from Files</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Use `fscanf()` to read formatted input from a file, similar to `scanf()`. `fgets()` can read a whole line.
+                </p>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    FILE *fptr;
+    char buffer[100];
+
+    fptr = fopen("data.txt", "r"); // Open the file we just wrote to
+
+    if (fptr == NULL) {
+        printf("Error opening file!\n");
+        return 1;
+    }
+
+    printf("Content of data.txt:\n");
+    while (fgets(buffer, sizeof(buffer), fptr) != NULL) {
+        printf("%s", buffer);
+    }
+
+    fclose(fptr);
+    return 0;
+}</pre>
+                </div>
+            </section>
+
+            <section id="notes-dynamic-memory" class="content-section">
+                <h2 class="section-heading">11. Dynamic Memory Allocation</h2>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Dynamic memory allocation allows you to allocate memory during program execution (runtime), rather than at compile time. This is essential when you don't know the exact memory requirements beforehand.
+                    The `<stdlib.h>` header provides functions for this.
+                </p>
+
+                <h3 class="subsection-heading">11.1 `malloc()` (Memory Allocation)</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Allocates a block of memory of the specified size and returns a `void` pointer to the beginning of the block. You must cast it to the desired type.
+                </p>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt; // For malloc, free
+
+int main() {
+    int *ptr;
+    int n = 5;
+
+    // Allocate memory for 5 integers
+    ptr = (int*) malloc(n * sizeof(int));
+
+    if (ptr == NULL) {
+        printf("Memory allocation failed!\n");
+        return 1;
+    }
+
+    printf("Memory allocated successfully.\n");
+
+    // Initialize and print allocated memory
+    for (int i = 0; i < n; i++) {
+        ptr[i] = i + 1;
+        printf("%d ", ptr[i]);
+    }
+    printf("\n");
+
+    free(ptr); // Free the allocated memory
+    printf("Memory freed.\n");
+    return 0;
+}</pre>
+                </div>
+
+                <h3 class="subsection-heading">11.2 `calloc()` (Contiguous Allocation)</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Allocates memory for a specified number of elements of a given size and initializes all bytes to zero.
+                </p>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int *ptr;
+    int n = 3;
+
+    // Allocate memory for 3 integers and initialize to 0
+    ptr = (int*) calloc(n, sizeof(int));
+
+    if (ptr == NULL) {
+        printf("Memory allocation failed!\n");
+        return 1;
+    }
+
+    printf("Calloc allocated memory (initialized to 0): ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", ptr[i]);
+    }
+    printf("\n");
+
+    free(ptr);
+    return 0;
+}</pre>
+                </div>
+
+                <h3 class="subsection-heading">11.3 `realloc()` (Reallocate Memory)</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Changes the size of the memory block pointed to by `ptr` to the new specified size.
+                </p>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int *ptr;
+    ptr = (int*) malloc(2 * sizeof(int)); // Allocate for 2 ints
+    ptr[0] = 10;
+    ptr[1] = 20;
+
+    printf("Original: %d %d\n", ptr[0], ptr[1]);
+
+    // Reallocate to hold 4 integers
+    ptr = (int*) realloc(ptr, 4 * sizeof(int));
+    if (ptr == NULL) {
+        printf("Reallocation failed!\n");
+        return 1;
+    }
+
+    ptr[2] = 30;
+    ptr[3] = 40;
+    printf("Reallocated: %d %d %d %d\n", ptr[0], ptr[1], ptr[2], ptr[3]);
+
+    free(ptr);
+    return 0;
+}</pre>
+                </div>
+
+                <h3 class="subsection-heading">11.4 `free()` (Free Memory)</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Deallocates the memory previously allocated by `malloc()`, `calloc()`, or `realloc()`. It's crucial to `free` memory to prevent memory leaks.
+                </p>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int *ptr = (int*) malloc(sizeof(int));
+    if (ptr == NULL) return 1;
+    *ptr = 100;
+    printf("Value: %d\n", *ptr);
+    free(ptr); // Memory is returned to the system
+    // ptr is now a dangling pointer, do not use it again without reassigning
+    // ptr = NULL; // Good practice to set to NULL after freeing
+    return 0;
+}</pre>
+                </div>
+            </section>
+
+            <section id="notes-preprocessor" class="content-section">
+                <h2 class="section-heading">12. Preprocessor Directives</h2>
+                <p class="text-lg mb-4 text-secondary-color">
+                    The C preprocessor is a program that processes the source code before compilation. Directives begin with a `#` symbol.
+                </p>
+
+                <h3 class="subsection-heading">12.1 `#include`</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Includes the content of another file into the current source file.
+                    <ul class="list-disc list-inside ml-4 text-lg text-secondary-color mb-4">
+                        <li>`#include <filename>`: For standard library headers.</li>
+                        <li>`#include "filename"`: For user-defined headers.</li>
+                    </ul>
+                </p>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt; // Standard library
+#include "my_header.h" // User-defined header (if it exists)</pre>
+                </div>
+
+                <h3 class="subsection-heading">12.2 `#define`</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Used to define macros, which are essentially text substitutions.
+                </p>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+#define PI 3.14159
+#define MAX(a, b) ((a > b) ? a : b)
+
+int main() {
+    printf("Value of PI: %.5f\n", PI);
+    printf("Max of 10 and 20: %d\n", MAX(10, 20));
+    return 0;
+}</pre>
+                </div>
+
+                <h3 class="subsection-heading">12.3 Conditional Compilation (`#ifdef`, `#ifndef`, `#if`, `#else`, `#endif`)</h3>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Allows you to include or exclude parts of code based on conditions.
+                </p>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+#define DEBUG_MODE
+
+int main() {
+    #ifdef DEBUG_MODE
+        printf("Debugging is enabled.\n");
+    #else
+        printf("Debugging is disabled.\n");
+    #endif
+
+    #if __STDC_VERSION__ >= 199901L
+        printf("C99 or later standard.\n");
+    #else
+        printf("Older C standard.\n");
+    #endif
+    return 0;
+}</pre>
+                </div>
+            </section>
+
+            <section id="notes-command-line" class="content-section">
+                <h2 class="section-heading">13. Command Line Arguments</h2>
+                <p class="text-lg mb-4 text-secondary-color">
+                    C programs can accept arguments directly from the command line when they are executed. These are passed to the `main` function.
+                </p>
+                <ul class="list-disc list-inside ml-4 text-lg text-secondary-color mb-4">
+                    <li>`argc`: (Argument Count) An integer representing the number of arguments passed.</li>
+                    <li>`argv`: (Argument Vector) An array of strings (char pointers), where each string is one of the arguments. `argv[0]` is always the program's name.</li>
+                </ul>
+                <div class="code-block">
+                    <pre>#include &lt;stdio.h&gt;
+
+int main(int argc, char *argv[]) {
+    printf("Number of arguments: %d\n", argc);
+    printf("Arguments received:\n");
+    for (int i = 0; i < argc; i++) {
+        printf("Argument %d: %s\n", i, argv[i]);
+    }
+    return 0;
+}</pre>
+                </div>
+                <p class="text-lg mb-4 text-secondary-color">
+                    <span class="text-accent font-semibold">How to run:</span>
+                    <br>Compile: `gcc your_program.c -o your_program`
+                    <br>Run: `./your_program arg1 arg2 "another argument"`
+                </p>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="header-bg py-8 px-4 sm:px-6 lg:px-8 text-center text-md border-t" style="border-color: var(--card-border);">
+        <div class="max-w-7xl mx-auto" style="color: var(--text-secondary);">
+            <p>&copy; 2025 BOZON ACADEMY. All rights reserved.</p>
+            <p class="mt-2">Developed with passion by <span class="font-semibold" style="color: var(--accent-color);">HICKS BOZON404</span></p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('themeToggle');
+
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme === 'light') {
+                document.body.classList.add('light-mode');
+                themeToggle.textContent = '🌙';
+            } else {
+                themeToggle.textContent = '☀️';
+            }
+
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('light-mode');
+                if (document.body.classList.contains('light-mode')) {
+                    localStorage.setItem('theme', 'light');
+                    themeToggle.textContent = '🌙';
+                } else {
+                    localStorage.setItem('theme', 'dark');
+                    themeToggle.textContent = '☀️';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

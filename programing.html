@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programming - BOZON ACADEMY</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #000000;
+            --bg-secondary: #0a0a0a;
+            --text-primary: #e2e8f0;
+            --text-secondary: #a0aec0;
+            --accent-color: #34d399;
+            --accent-hover: #10b981;
+            --card-bg: #1a1a1a;
+            --card-border: #2d3748;
+            --card-hover-border: var(--accent-color);
+            --shadow-color: rgba(0, 0, 0, 0.4);
+        }
+
+        body.light-mode {
+            --bg-primary: #f0f2f5;
+            --bg-secondary: #ffffff;
+            --text-primary: #2d3748;
+            --text-secondary: #4a5568;
+            --accent-color: #059669;
+            --accent-hover: #047857;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --card-hover-border: var(--accent-color);
+            --shadow-color: rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        .header-bg {
+            background-color: var(--bg-secondary);
+        }
+
+        .content-section {
+            background-color: var(--bg-secondary);
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 20px var(--shadow-color);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .course-topic-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.5s ease;
+            will-change: transform, box-shadow;
+        }
+
+        .course-topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px var(--shadow-color);
+            border-color: var(--card-hover-border);
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            will-change: background-color, transform, box-shadow;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 8px 15px var(--shadow-color);
+        }
+
+        .theme-toggle-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--text-primary);
+            font-size: 1.8rem;
+            transition: color 0.3s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            color: var(--accent-color);
+        }
+
+        .text-accent {
+            color: var(--accent-color);
+        }
+        .text-primary-color {
+            color: var(--text-primary);
+        }
+        .text-secondary-color {
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <header class="header-bg shadow-lg py-6 px-4 sm:px-6 lg:px-8 bg-opacity-80 backdrop-blur-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center">
+            <div class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4 sm:mb-0 text-accent">
+                BOZON ACADEMY
+            </div>
+            <nav class="flex items-center space-x-4 sm:space-x-6">
+                <ul class="flex space-x-4 sm:space-x-6">
+                    <li><a href="index.html" class="text-lg font-medium text-secondary-color hover:text-accent transition duration-300">Home</a></li>
+                    <li><a href="index.html#courses" class="text-lg font-medium text-secondary-color hover:text-accent transition duration-300">Courses</a></li>
+                    <li><a href="index.html#about" class="text-lg font-medium text-secondary-color hover:text-accent transition duration-300">About</a></li>
+                    <li><a href="index.html#contact" class="text-lg font-medium text-secondary-color hover:text-accent transition duration-300">Contact</a></li>
+                </ul>
+                <button id="themeToggle" class="theme-toggle-btn">
+                    ☀️
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow py-16 px-4 sm:px-6 lg:px-8" style="background-color: var(--bg-primary);">
+        <div class="max-w-7xl mx-auto">
+            <h1 class="text-5xl font-extrabold text-center mb-12 text-accent">Programming</h1>
+
+            <section class="content-section">
+                <h2 class="text-3xl font-bold mb-6 text-primary-color">Introduction to Programming</h2>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Programming is the art and science of instructing computers to perform tasks. It's the foundation of all software, from mobile apps to complex operating systems. This section covers the very basics: what programming is, why it's essential in the modern world, and the fundamental logic that underpins all code.
+                </p>
+                <ul class="list-disc list-inside text-lg text-secondary-color">
+                    <li>What is a program?</li>
+                    <li>Role of algorithms and flowcharts</li>
+                    <li>Introduction to computational thinking</li>
+                    <li>Understanding compilers and interpreters</li>
+                </ul>
+            </section>
+
+            <section class="content-section">
+                <h2 class="text-3xl font-bold mb-6 text-primary-color">Core Programming Concepts</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="course-topic-card rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">Variables & Data Types</h4>
+                        <p class="text-base text-secondary-color">Storing and manipulating different kinds of information (numbers, text, booleans).</p>
+                    </div>
+                    <div class="course-topic-card rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">Operators</h4>
+                        <p class="text-base text-secondary-color">Performing mathematical, logical, and assignment operations.</p>
+                    </div>
+                    <div class="course-topic-card rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">Control Flow (Conditionals)</h4>
+                        <p class="text-base text-secondary-color">Making decisions in code using `if`, `else if`, and `else` statements.</p>
+                    </div>
+                    <div class="course-topic-card rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">Control Flow (Loops)</h4>
+                        <p class="text-base text-secondary-color">Repeating actions using `for`, `while`, and `do-while` loops.</p>
+                    </div>
+                    <div class="course-topic-card rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">Functions & Modularity</h4>
+                        <p class="text-base text-secondary-color">Organizing code into reusable blocks for better structure.</p>
+                    </div>
+                    <div class="course-topic-card rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">Arrays & Collections</h4>
+                        <p class="text-base text-secondary-color">Storing multiple items in a single variable and managing data collections.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2 class="text-3xl font-bold mb-6 text-primary-color">Popular Programming Languages</h2>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Explore various programming languages, each with its unique strengths and applications. Click on a language to dive deeper into its specifics.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <a href="c.html" class="course-topic-card block rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">C</h4>
+                        <p class="text-base text-secondary-color">Foundation of many operating systems and embedded systems.</p>
+                    </a>
+                    <a href="cpp.html" class="course-topic-card block rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">C++</h4>
+                        <p class="text-base text-secondary-color">High-performance, used in game development, operating systems, and complex applications.</p>
+                    </a>
+                    <a href="csharp.html" class="course-topic-card block rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">C#</h4>
+                        <p class="text-base text-secondary-color">Microsoft's language for Windows apps, game development (Unity), and web services.</p>
+                    </a>
+                    <a href="python.html" class="course-topic-card block rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">Python</h4>
+                        <p class="text-base text-secondary-color">Versatile, easy-to-learn, used in web development, data science, AI, and scripting.</p>
+                    </a>
+                    <a href="javascript.html" class="course-topic-card block rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">JavaScript</h4>
+                        <p class="text-base text-secondary-color">Essential for web development (frontend and backend with Node.js), interactive applications.</p>
+                    </a>
+                    <a href="java.html" class="course-topic-card block rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">Java</h4>
+                        <p class="text-base text-secondary-color">Robust, platform-independent, widely used for enterprise applications and Android development.</p>
+                    </a>
+                    <a href="go.html" class="course-topic-card block rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">Go (Golang)</h4>
+                        <p class="text-base text-secondary-color">Developed by Google, known for its efficiency, concurrency, and use in cloud services.</p>
+                    </a>
+                    <a href="swift.html" class="course-topic-card block rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">Swift</h4>
+                        <p class="text-base text-secondary-color">Apple's powerful and intuitive language for iOS, macOS, watchOS, and tvOS app development.</p>
+                    </a>
+                    <a href="kotlin.html" class="course-topic-card block rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">Kotlin</h4>
+                        <p class="text-base text-secondary-color">Modern, concise, and safe language for Android app development and server-side applications.</p>
+                    </a>
+                    <a href="ruby.html" class="course-topic-card block rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">Ruby</h4>
+                        <p class="text-base text-secondary-color">Dynamic, open-source language with a focus on simplicity and productivity, popular for web development (Ruby on Rails).</p>
+                    </a>
+                    <a href="php.html" class="course-topic-card block rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">PHP</h4>
+                        <p class="text-base text-secondary-color">Widely used server-side scripting language for web development, powering a large portion of the internet.</p>
+                    </a>
+                    <a href="typescript.html" class="course-topic-card block rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">TypeScript</h4>
+                        <p class="text-base text-secondary-color">A superset of JavaScript that adds static typing, enhancing code quality and scalability.</p>
+                    </a>
+                    <a href="rust.html" class="course-topic-card block rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">Rust</h4>
+                        <p class="text-base text-secondary-color">A systems programming language focused on safety, performance, and concurrency.</p>
+                    </a>
+                    <a href="scala.html" class="course-topic-card block rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">Scala</h4>
+                        <p class="text-base text-secondary-color">Combines object-oriented and functional programming, runs on the JVM, popular for big data.</p>
+                    </a>
+                    <a href="haskell.html" class="course-topic-card block rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">Haskell</h4>
+                        <p class="text-base text-secondary-color">A purely functional programming language known for its strong type system and expressiveness.</p>
+                    </a>
+                    <a href="r.html" class="course-topic-card block rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">R</h4>
+                        <p class="text-base text-secondary-color">Primarily used for statistical computing and graphics, popular in data analysis and research.</p>
+                    </a>
+                    <a href="matlab.html" class="course-topic-card block rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">MATLAB</h4>
+                        <p class="text-base text-secondary-color">Proprietary language for numerical computation, visualization, and algorithm development.</p>
+                    </a>
+                    <a href="sql.html" class="course-topic-card block rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">SQL</h4>
+                        <p class="text-base text-secondary-color">Standard language for managing and querying relational databases.</p>
+                    </a>
+                    <a href="html_css.html" class="course-topic-card block rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">HTML & CSS</h4>
+                        <p class="text-base text-secondary-color">The foundational languages for structuring and styling web content.</p>
+                    </a>
+                    <a href="assembly.html" class="course-topic-card block rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">Assembly Language</h4>
+                        <p class="text-base text-secondary-color">Low-level programming language directly interacting with computer hardware.</p>
+                    </a>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2 class="text-3xl font-bold mb-6 text-primary-color">Advanced Programming Concepts</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="course-topic-card rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">Object-Oriented Programming (OOP)</h4>
+                        <p class="text-base text-secondary-color">In-depth study of classes, objects, inheritance, polymorphism, and encapsulation.</p>
+                    </div>
+                    <div class="course-topic-card rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">Data Structures & Algorithms</h4>
+                        <p class="text-base text-secondary-color">Detailed analysis of arrays, linked lists, trees, graphs, sorting, searching, and complexity analysis.</p>
+                    </div>
+                    <div class="course-topic-card rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">Concurrency & Parallelism</h4>
+                        <p class="text-base text-secondary-color">Writing programs that perform multiple tasks simultaneously for improved performance.</p>
+                    </div>
+                    <div class="course-topic-card rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">Design Patterns</h4>
+                        <p class="text-base text-secondary-color">Reusable solutions to common problems in software design.</p>
+                    </div>
+                    <div class="course-topic-card rounded-lg p-5">
+                        <h4 class="text-xl font-semibold mb-2 text-accent">Testing & Debugging</h4>
+                        <p class="text-base text-secondary-color">Strategies for writing robust code and identifying/fixing errors.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2 class="text-3xl font-bold mb-6 text-primary-color">Tools & Ecosystem</h2>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Becoming a proficient programmer involves mastering not just languages, but also the tools that make development efficient.
+                </p>
+                <ul class="list-disc list-inside text-lg text-secondary-color">
+                    <li>Integrated Development Environments (IDEs) like VS Code, IntelliJ IDEA, PyCharm</li>
+                    <li>Version Control Systems (VCS) like Git and platforms like GitHub</li>
+                    <li>Package Managers (npm, pip, Maven, Gradle)</li>
+                    <li>Debugging tools and techniques</li>
+                </ul>
+            </section>
+
+            <section class="content-section">
+                <h2 class="text-3xl font-bold mb-6 text-primary-color">Project-Based Learning</h2>
+                <p class="text-lg mb-4 text-secondary-color">
+                    The best way to learn programming is by doing. This course encourages hands-on projects to solidify your understanding:
+                </p>
+                <ul class="list-disc list-inside text-lg text-secondary-color">
+                    <li>Building a simple calculator</li>
+                    <li>Creating a command-line game (e.g., Tic-Tac-Toe)</li>
+                    <li>Developing a basic web page with interactivity</li>
+                    <li>Implementing common data structures from scratch</li>
+                    <li>Contributing to open-source projects</li>
+                </ul>
+            </section>
+
+            <section class="content-section">
+                <h2 class="text-3xl font-bold mb-6 text-primary-color">Resources & Exam Preparation</h2>
+                <p class="text-lg mb-4 text-secondary-color">
+                    Access curated notes, practice problems, and past exam papers to prepare effectively.
+                </p>
+                <ul class="list-disc list-inside text-lg text-secondary-color">
+                    <li>Detailed notes on all topics</li>
+                    <li>Practice exercises with solutions</li>
+                    <li>Sample exam questions and mock tests</li>
+                    <li>Links to official language documentation and popular coding challenge platforms</li>
+                </ul>
+            </section>
+        </div>
+    </main>
+
+    <footer class="header-bg py-8 px-4 sm:px-6 lg:px-8 text-center text-md border-t" style="border-color: var(--card-border);">
+        <div class="max-w-7xl mx-auto" style="color: var(--text-secondary);">
+            <p>&copy; 2025 BOZON ACADEMY. All rights reserved.</p>
+            <p class="mt-2">Developed with passion by <span class="font-semibold" style="color: var(--accent-color);">HICKS BOZON404</span></p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('themeToggle');
+
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme === 'light') {
+                document.body.classList.add('light-mode');
+                themeToggle.textContent = '🌙';
+            } else {
+                themeToggle.textContent = '☀️';
+            }
+
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('light-mode');
+                if (document.body.classList.contains('light-mode')) {
+                    localStorage.setItem('theme', 'light');
+                    themeToggle.textContent = '🌙';
+                } else {
+                    localStorage.setItem('theme', 'dark');
+                    themeToggle.textContent = '☀️';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
