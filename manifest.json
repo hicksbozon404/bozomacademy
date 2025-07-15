@@ -3,17 +3,17 @@
   "short_name": "Bozon Academy",
   "description": "Comprehensive notes, tools, and exam materials for various courses.",
   "start_url": "index.html",
-  "display": "standalone", // Changed from fullscreen for better UX in most cases
+  "display": "fullscreen",
   "background_color": "#000000",
   "theme_color": "#34d399",
   "icons": [
     {
-      "src": "https://placehold.co/192x192/0a0a0a/34d399?text=BA", // Replace with your actual 192x192 icon
+      "src": "https://hicksbozon404.github.io/bozomacademy/icon-512x512.png", // Replace with your actual 192x192 icon
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://placehold.co/512x512/0a0a0a/34d399?text=BA", // Replace with your actual 512x512 icon
+      "src": "https://hicksbozon404.github.io/bozomacademy/icon-512x512.png", // Replace with your actual 512x512 icon
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable" // Combines the two 512x512 entries
