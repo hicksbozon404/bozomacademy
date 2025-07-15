@@ -2,7 +2,7 @@
   "name": "BOZON ACADEMY",
   "short_name": "Bozon Academy",
   "description": "Comprehensive notes, tools, and exam materials for various courses.",
-  "start_url": "/index.html",
+  "start_url": "index.html",
   "display": "standalone", // Changed from fullscreen for better UX in most cases
   "background_color": "#000000",
   "theme_color": "#34d399",
